@@ -207,7 +207,7 @@
     margin: 0 0 1.2em;
     display: inline-block;
     width: 25%;
-    position:relative
+    position: relative
 }
 
     .sdControlContainer > span {
@@ -286,6 +286,7 @@
         position: absolute;
         left: 5px;
     }
+
     .jHelp ~ sdIcon:before {
         content: "i";
         color: #8f86b3;
@@ -298,13 +299,15 @@
         animation-delay: 6s;
         animation-iteration-count: infinite;
     }
+
 sdIcon {
     display: inline-block;
     width: 12px;
     height: 12px;
     text-align: center;
 }
-@keyframes sdIconAnim{
+
+@keyframes sdIconAnim {
     0% {
         color: #8f86b3;
     }
@@ -378,3 +381,47 @@ sdIcon {
             padding: .5em;
             border-bottom-right-radius: 9px;
         }
+
+
+
+
+div#jHelp {
+    background: #dfeffc;
+    padding: 2em;
+    position: fixed;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+    box-shadow: 5px 5px 20px #9595a2;
+    font-size: 1.3em;
+    font-family: courier new;
+    overflow: hidden;
+}
+
+    div#jHelp > div {
+        overflow-y: scroll;
+        height: 88%;
+    }
+
+    div#jHelp > span {
+        position: absolute;
+        top: .5em;
+        right: 1em;
+        cursor:pointer
+    }
+
+ul#sdHelp > li b {
+    color: #4080b5;
+}
+
+ul#sdHelp > li > h6 {
+    color: #4080b5;
+    font-size: 2em;
+}
+
+ul#sdHelp > li {
+    margin-bottom: 2em;
+    border-bottom: 1px dotted #0921ae;
+    padding-bottom: 1em;
+}
