@@ -1,6 +1,7 @@
 <h4>SD.Javascript</h4>
 <p>Demo code for implement SD.Javascript</p>
 <style>
+
     #divConfig {
         width: 100%
     }
@@ -17,7 +18,6 @@
     <span><b id="btnRun" class="fa fa-play btn btn-info"></b></span>
 </div>
 <div id="frm"></div>
-
 <hr />
 <h3>Basic</h3>
 <code>
@@ -37,9 +37,12 @@
     }]
     };
 </code>
-<h3>Advanced</h3>
+<h3>Advanced 1</h3>
 <code>
     { "Title":"Registro de comprobante bancario","Data":{"Master":{"Id":"","Numero":"CB19154-014","Fecha":"","Descripcion":"","IdBanco":"","CodigoBanco":"","Banco":"","CuentaBancaria":""},"Detail":[{"Id":"","IdControlBancario":"","IdInterviniente":"","Interviniente":"","Monto":"","Observacion":"","Referencia":"","IdImpuesto":"","Impuesto":"","Alicuota":"","Iva":"","Retenciones":""}]},"Buttons":{"Master":[{"Id":"Search","Title":"","FA":"fa-search"},{"Id":"Save","Title":"Click para procesar","FA":"fa-save"}],"Detail":[{"Id":"Search","Title":"","FA":"fa-search"}]},"ForeignKeyColumns":[{"Id":"txtmBanco","ServiceMethod":"bancos"},{"Id":"txtImpuesto","ServiceMethod":"impuestos"}],"InputWithActionColumns":[{"Id":"txtmBanco","Event":"blur"},{"Id":"txtImpuesto","Event":"blur"},{"Id":"txtCodigo","Event":"input"},{"Id":"txtStock","Event":"blur"}],"InputMasks":[{"Id":"txtmFecha","Mask":"dd/mm/yyyy","Slot":"dmy"},{"Id":"txtmNumero","Mask":"CB_____-___","Slot":"_"}],"CalculatedColumns":"","ReadonlyColumns":"Id*,Alicuota,CodigoBanco,CuentaBancaria","HiddenColumns":"Id*","CurrencyColumns":"Monto,Retenciones,Iva","CurrencyISOColumns":"Bs,Bs,Bs","InputHelpColumns":[{"Id":"txtmNumero","Help":"Numero generado por el sistema de forma automatica. tambien permite buscar un movimiento por este valor"}]}
+</code>
 
-    
+<h3>Advanced 2</h3>
+<code>
+    {"Container":"#frmProveedores","Title":"Maestro de Proveedores","Data":{"Master":{},"Detail":[{"Id":"132395","RazonSocial":"INSTUTO MCPAL DE AMBIENTE CHACAO","Activo":"S","Codigo":"D00000001","Domicilio":"CALLE MONSEÑOR JUAN GRILC, ESQUINA CALLEJON AMAYA, PISO 01 CHACAO","RIF":"G-20000886-5","Cedula":"-","Contacto":"-","Telefono":"+58(212)-267.89.78","Email":"-","IdZona":"1","Zona":"Caracas","IdCuentaContable":"3091","CuentaContable":"2.1.01.21.01.001   ","IdDireccion":"1","Direccion":"Administración","IdCargo":"1","Cargo":"Sin Definir","Contribuyente":"S","CuentaBancaria":"-","PagoPorRazonSocial":"S"},{"Id":"132396","RazonSocial":"BINARIA DE VENEZUELA,C.A","Activo":"S","Codigo":"D00000002","Domicilio":"CALLE 127, EDIF EL CASTANAR PISO 11 APTO 11-A. URB. AGUA BLANCA. VALENCIA, EDO.","RIF":"J-31264055-3","Cedula":"-","Contacto":"","Telefono":"-","Email":"-","IdZona":"5","Zona":"Valencia","IdCuentaContable":"3091","CuentaContable":"2.1.01.21.01.001   ","IdDireccion":"1","Direccion":"Administración","IdCargo":"1","Cargo":"Sin Definir","Contribuyente":"S","CuentaBancaria":"-","PagoPorRazonSocial":"S"},{"Id":"132397","RazonSocial":"DISTRIBUIDORA FERREMAS,C.A","Activo":"S","Codigo":"D00000003","Domicilio":"AV. ANDRES ELOY BLANCO CASA NRO. 128-37, SECTOR SAN JOSE DE VALENCIA, EDO. CARAB","RIF":"J-40759889-9","Cedula":"-","Contacto":"-","Telefono":"-","Email":"-","IdZona":"5","Zona":"Valencia","IdCuentaContable":"3091","CuentaContable":"2.1.01.21.01.001   ","IdDireccion":"1","Direccion":"Administración","IdCargo":"1","Cargo":"Sin Definir","Contribuyente":"S","CuentaBancaria":"-","PagoPorRazonSocial":"S"},{"Id":"149888","RazonSocial":"HORSY MARGOTH RIVAS CONTRERAS","Activo":"S","Codigo":"P19-00008","Domicilio":"-","RIF":"V-15102642-3","Cedula":null,"Contacto":"-","Telefono":"-","Email":"-","IdZona":"5","Zona":"Valencia","IdCuentaContable":"3091","CuentaContable":"2.1.01.21.01.001   ","IdDireccion":"","Direccion":"-","IdCargo":"","Cargo":"-","Contribuyente":"N","CuentaBancaria":null,"PagoPorRazonSocial":"N"}]},"Buttons":{"Master":[{"Id":"Refresh","Title":"Refrescar datos","FA":"fa-refresh"},{"Id":"Save","Title":"","FA":"fa-save"}]},"ForeignKeyColumns":[{"Id":"txtCuentaContable","ServiceMethod":"cuentas"},{"Id":"txtZona","ServiceMethod":"zonas"}],"InputWithActionColumns":[{"Id":"txtCuentaContable","Event":"blur"},{"Id":"txtZona","Event":"blur"},{"Id":"txtRIF","Event":"input"},{"Id":"txtRIF","Event":"blur"}],"HiddenColumns":"Id*","ReadonlyColumns":"Id,Codigo","InputMasks":[{"Id":"txtCodigo","Mask":"I__-_____","Slot":"_"},{"Id":"txtTelefono","Mask":"+__(___)-___.__.__","Slot":"_"}]}
 </code>
