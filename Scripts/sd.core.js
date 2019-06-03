@@ -9,7 +9,7 @@ function SD(ns) {
 /*----------------------------
  * Variable
  *----------------------------*/
-var _Version = "1.0.69";
+var _Version = "1.0.71";
 SD.STARTTIME = new Date();
 var _Window = window;
 var _Tracert = false;
@@ -67,6 +67,11 @@ SD.prototype.Constructor = function () {
 
     if (typeof (sd.Project) != "undefined" && typeof (sd.Project.Load) == "function")
         sd.Project.Load();
+    else
+        _.cl("You must load sd.javascript.project.js before", "warning");
+
+    if (typeof (sd.Custom) != "undefined" && typeof (sd.Custom.Load) == "function")
+        sd.Custom.Load();
     else
         _.cl("You must load sd.javascript.project.js before", "warning");
 
@@ -505,7 +510,7 @@ SD.prototype.Utils = {
                 for (var a = 0; a < inputWidthFixed.length; a++) {
                     var input = inputWidthFixed[a];
                     if (input.Id == txt.id) {
-                        txt.style.width = `${input.Width}px`;
+                        txt.style.width = `${!isNaN(input.Width) ? input.Width + "px" : input.Width}`;
                         continue;
                     }
                 }
@@ -2380,18 +2385,18 @@ SD.prototype.UI = {
     },
     Paginador: {
         Contenedor: "",
-        ItemsPorPagina: 0,
-        MaximoPaginas: 0,
-        EtiquetaACrear: "",
+        ItemsPorPagina: 10,
+        MaximoPaginas: 10,
+        EtiquetaACrear: "div",
         AgregarClaseCss: "",
         Mostrar: function () {
             if (_Tracert) {
                 _.cl('method: "SD.UI.Paginador.Mostrar()" has loaded successfuly');
             }
-            nombreContenedor = this.Contenedor;
-            itemsPorPagina = this.ItemsPorPagina;
-            maximoPaginasAMostrar = this.MaximoPaginas;
-            addClassPagina = this.AgregarClaseCss;
+            var nombreContenedor = this.Contenedor;
+            var itemsPorPagina = this.ItemsPorPagina;
+            var maximoPaginasAMostrar = this.MaximoPaginas;
+            var addClassPagina = this.AgregarClaseCss;
             /// <summary>Pï¿½ginador dinï¿½mico creado vï¿½a JavaScript.</summary>
             /// <param name="nombreContenedor" type="String">Nombre del contenedor para buscar el elemento por el metodo document.getElementById, donde se alojarï¿½n las nuevas pï¿½ginas generadas por el pï¿½ginador.</param>
             /// <param name="itemsPorPagina" type="Number">Indica la cantidad de elementos por pï¿½gina, por defecto se establece 5.</param>
@@ -2401,13 +2406,13 @@ SD.prototype.UI = {
             /// <returns type="Void">Construye pï¿½ginas usando Divs y asinandole el Id='pagina+iteradorPaginas'.</returns>
             try {
                 if (nombreContenedor.length > 0) {
-                    var contenedor = document.getElementById(nombreContenedor);
+                    var contenedor = _.fn(nombreContenedor);
                     contenedor.insertAdjacentHTML('afterEnd', ' <div id="paginador"></div> ');
                     if (contenedor.parentNode.className === "ajax_waiting") {
                         contenedor.parentNode.className = "";
                     }
                     var notas = contenedor.childNodes;
-                    var paginador = document.getElementById("paginador");
+                    var paginador = _.fn("#paginador");
                     if (notas !== null) {
                         var inicioPagina = 0;
                         var finPagina = itemsPorPagina;
@@ -2415,8 +2420,8 @@ SD.prototype.UI = {
                         var paginas = Math.ceil(totalItems / itemsPorPagina);
                         var oldDivs = [];
                         oldDivs.push.apply(oldDivs, notas);
-                        for (a = 0; a < paginas; a++) {
-                            var div = document.createElement(this.EtiquetaACrear);
+                        for (var a = 0; a < paginas; a++) {
+                            var div = _.ne({ tag: this.EtiquetaACrear });
                             div.id = "pagina" + a;
                             div.className = "pagina " + (addClassPagina !== undefined ? addClassPagina : '');
                             if (a === 0) {
@@ -2427,19 +2432,19 @@ SD.prototype.UI = {
                             }
                             contenedor.appendChild(div);
                         }
-                        for (b = 0; b < paginas; b++) {
+                        for (var b = 0; b < paginas; b++) {
                             var pagina = null;
                             var temp = new Array();
-                            pagina = document.getElementById("pagina" + b);
+                            pagina = _.fn("#pagina" + b);
                             temp = oldDivs.slice(inicioPagina, finPagina);
-                            for (i = 0; i < temp.length; i++) {
+                            for (var i = 0; i < temp.length; i++) {
                                 pagina.appendChild(temp[i]);
                             }
                             finPagina = itemsPorPagina * (b + 2);
                             inicioPagina = finPagina - itemsPorPagina;
                         }
-                        for (c = 0; c < (paginas > maximoPaginasAMostrar ? maximoPaginasAMostrar : paginas) - 1; c++) {
-                            var elemento = document.createElement("a");
+                        for (var c = 0; c < (paginas > maximoPaginasAMostrar ? maximoPaginasAMostrar : paginas) - 1; c++) {
+                            var elemento = _.ne({ tag: "a" });
                             elemento.id = "link" + c;
                             elemento.href = "javascript:SD.UI.Paginador.Mover('link" + c + "','pagina" + c + "')";
                             elemento.innerHTML = c + 1;
@@ -3503,6 +3508,22 @@ try {
     };
     String.prototype.ToFloat = function () {
         return parseFloat(this);
+    };
+    String.prototype.RemoveAccents = function () {
+        var r = this.toLowerCase();
+        r = r.replace(new RegExp("\\s", 'g'), "");
+        r = r.replace(new RegExp("[àáâãäå]", 'g'), "a");
+        r = r.replace(new RegExp("æ", 'g'), "ae");
+        r = r.replace(new RegExp("ç", 'g'), "c");
+        r = r.replace(new RegExp("[èéêë]", 'g'), "e");
+        r = r.replace(new RegExp("[ìíîï]", 'g'), "i");
+        r = r.replace(new RegExp("ñ", 'g'), "n");
+        r = r.replace(new RegExp("[òóôõö]", 'g'), "o");
+        r = r.replace(new RegExp("œ", 'g'), "oe");
+        r = r.replace(new RegExp("[ùúûü]", 'g'), "u");
+        r = r.replace(new RegExp("[ýÿ]", 'g'), "y");
+        //r = r.replace(new RegExp("\\W", 'g'), "");
+        return r;
     };
     Number.prototype.ToFloat = function () {
         return parseFloat(this);

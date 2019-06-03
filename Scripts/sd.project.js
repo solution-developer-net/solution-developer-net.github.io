@@ -29,6 +29,7 @@ if (typeof (SD) != "undefined") {
                 eval(logic);
             } catch (e) {
                 _.cl(`Not logic founded to ${path}`, "error");
+                project.PageIndex();
             }
 
             try {
@@ -69,7 +70,13 @@ if (typeof (SD) != "undefined") {
                     }]
                 };
                 utils.HTMLForm(config);
-                c.txtConfig.value = JSON.stringify(config).split(',').join('\n') ;
+                c.txtConfig.value = JSON.stringify(config);
+
+
+                _.on(c.btnRun, false, e.OnClick, () => {
+                    var config = c.txtConfig.value;
+                    utils.HTMLForm(JSON.parse(config));
+                });
             }
         },
         /**
