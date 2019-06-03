@@ -1,0 +1,380 @@
+﻿.jTable {
+    width: 100%;
+}
+
+    .jTable td, .jTable th {
+        padding: 3px 10px;
+        font-size: 8pt;
+    }
+
+    .jTable > thead > tr > th, .jTable > tbody > tr > th, .jTable > tfoot > tr > th {
+        border: 1px solid #c5dbec !important;
+        background: #dfeffc url(ui-bg_glass_85_dfeffc_1x400.png) 50% 50% repeat-x;
+        font-weight: bold;
+        color: #2e6e9e;
+    }
+
+    .jTable > tbody > tr:nth-child(odd) > td {
+        background: white;
+    }
+
+    .jTable > tbody > tr > td {
+        border: 1px solid #a6c9e2;
+        background: #fcfdfd url(ui-bg_inset-hard_100_fcfdfd_1x100.png) 50% bottom repeat-x;
+        color: #222222;
+    }
+
+    .jTable > tbody > tr:hover > td, .jTable > tbody > tr:nth-child(odd):hover > td {
+        border: 1px solid #79b7e7;
+        background: #e0e5f5 url(ui-bg_inset-hard_100_fcfdfd_1x100.png) 50% bottom repeat-x;
+    }
+
+    .jTable > tbody > tr > td::before {
+        display: none;
+    }
+
+    .jTable > tbody > tr.selected > td {
+        border: 1px solid #fad42e;
+        background: #fbec88 url(ui-bg_flat_55_fbec88_40x100.png) 50% 50% repeat-x;
+        color: #363636;
+    }
+
+    .jTable .Added > td {
+        background-color: #bdf9bd !important;
+        color: green;
+    }
+
+    .jTable .Modified > td {
+        background-color: #f6f1a8 !important;
+        color: #946000;
+    }
+
+    .jTable .Deleted > td {
+        background-color: #f6dfe3 !important;
+        color: red;
+        text-decoration: line-through;
+    }
+
+#jSearch {
+    width: 100%;
+    height: 200px;
+    position: fixed;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid #438eb9;
+    padding: 10px;
+    bottom: 0;
+    left: 0;
+    background: white;
+    box-shadow: -2px -2px 17px #62a8d1;
+}
+
+    #jSearch > input {
+        width: 100%;
+    }
+
+    #jSearch > div {
+        overflow-y: auto;
+        height: 140px;
+    }
+
+
+.jLabel {
+    color: darkgray;
+    font-size: .9em;
+}
+
+.jTableButton {
+    display: inline-block;
+    border: 1px solid lightgray;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    float: right;
+    padding: 10px;
+    background: white;
+    cursor: pointer;
+    border-radius: 50%;
+    color: #337ab7;
+}
+
+    .jTableButton:hover {
+        background-color: cornflowerblue;
+        color: white;
+    }
+
+.buttonsCommand {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+    .buttonsCommand > li {
+        display: inline-block
+    }
+
+        .buttonsCommand > li > ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: none;
+            position: absolute;
+        }
+
+        .buttonsCommand > li:hover > ul {
+            display: block;
+        }
+
+
+#modalContainer {
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: 10000;
+    background-image: url(tp.png); /* required by MSIE to prevent actions on lower z-index elements */
+}
+
+#alertBox {
+    position: relative;
+    width: 300px;
+    min-height: 100px;
+    margin-top: 50px;
+    border: 1px solid #666;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: 20px 30px;
+}
+
+#modalContainer > #alertBox {
+    position: fixed;
+}
+
+#alertBox h1 {
+    margin: 0;
+    font: bold 0.9em verdana,arial;
+    background-color: #3073BB;
+    color: #FFF;
+    border-bottom: 1px solid #000;
+    padding: 2px 0 2px 5px;
+}
+
+#alertBox p {
+    font: 0.7em verdana,arial;
+    padding-left: 5px;
+    margin-left: 40px;
+    text-align: justify;
+    margin-right: 36px;
+    font-size: .85em;
+    padding-top: 1em;
+}
+
+    #alertBox p:before {
+        content: "i";
+        font-size: 2.5em;
+        color: #357ebd;
+        position: absolute;
+        left: 10px;
+        font-family: Webdings;
+    }
+
+#alertBox div {
+    text-align: center
+}
+
+
+
+#alertBox #closeBtn, #alertBox #cancelBtn {
+    display: inline-block;
+    position: relative;
+    margin: 5px 1em;
+    padding: 7px;
+    border: 0 none;
+    width: 70px;
+    font: 0.7em verdana,arial;
+    text-transform: uppercase;
+    text-align: center;
+    color: #FFF;
+    background-color: #357EBD;
+    border-radius: 3px;
+    text-decoration: none;
+}
+
+
+.sdControlContainer {
+    margin: 0 0 1.2em;
+    display: inline-block;
+    width: 25%;
+    position:relative
+}
+
+    .sdControlContainer > span {
+        font-size: .8em;
+        color: #62a8d1
+    }
+
+.jFormContainer {
+    background: #dfeffc;
+    padding: 2em;
+    position: relative;
+}
+
+.jForm {
+    padding: 1em;
+    background: #dfeffc;
+}
+
+    .jForm .jLabel {
+        color: #2e6e9e;
+    }
+
+    .jForm .jTableButton {
+        position: absolute;
+        top: .5em;
+        right: .5em;
+    }
+
+
+    .jForm > .jTableButton:nth-child(2) {
+        right: 2.5em !important;
+    }
+
+    .jForm > .jTableButton:nth-child(3) {
+        right: 4.5em !important;
+    }
+
+    .jForm > .jTableButton:nth-child(4) {
+        right: 6.5em !important;
+    }
+
+    .jForm > .jTableButton:nth-child(5) {
+        right: 8.5em !important;
+    }
+
+    .jForm > .jTableButton:nth-child(6) {
+        right: 10.5em !important;
+    }
+
+.highlighted {
+    background: yellow;
+}
+
+.jHelp {
+    position: absolute;
+    background: #2e6e9e;
+    border: 1px solid;
+    padding: .3em 1em;
+    color: white;
+    font-size: 10px;
+    border-radius: 4px;
+    margin-top: -35px;
+    margin-left: 32px;
+    font-family: tahoma;
+    font-weight: 100;
+    max-width: 300px;
+    min-width: 200px;
+    z-index: 1;
+}
+
+    .jHelp:after {
+        content: "";
+        bottom: -10px;
+        border: 5px solid transparent;
+        border-top-color: #2e6e9e;
+        position: absolute;
+        left: 5px;
+    }
+    .jHelp ~ sdIcon:before {
+        content: "i";
+        color: #8f86b3;
+        position: absolute;
+        font-size: 12px;
+        font-family: webdings;
+        font-weight: 100;
+        animation-name: sdIconAnim;
+        animation-duration: 10s;
+        animation-delay: 6s;
+        animation-iteration-count: infinite;
+    }
+sdIcon {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    text-align: center;
+}
+@keyframes sdIconAnim{
+    0% {
+        color: #8f86b3;
+    }
+
+    25% {
+        color: white;
+    }
+
+    50% {
+        color: blue;
+    }
+
+    100% {
+        color: #8f86b3;
+    }
+}
+
+
+.jList {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+}
+
+    .jList > li {
+        list-style: none;
+        width: 13%;
+        overflow: hidden;
+        float: left;
+        margin: .5%;
+        height: 255px;
+        margin-bottom: 1em;
+        border-bottom: 1px solid red;
+        position: relative;
+    }
+
+        .jList > li > small {
+            font-size: .5em;
+            position: absolute;
+            right: 0;
+            background: white;
+            padding: .5em;
+            top: 172px;
+            border-top-left-radius: 9px;
+        }
+
+        .jList > li > span:first-child {
+            background: red
+        }
+
+        .jList > li > h2 {
+            font-size: 1em;
+            height: 60px
+        }
+
+        .jList > li > img {
+            width: 100%;
+            height: 100px
+        }
+
+        .jList > li > p {
+            font-size: .6em;
+            text-align: justify
+        }
+
+        .jList > li > span {
+            font-size: .5em;
+            position: absolute;
+            left: 0;
+            background: white;
+            padding: .5em;
+            border-bottom-right-radius: 9px;
+        }
