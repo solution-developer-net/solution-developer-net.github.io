@@ -77,6 +77,9 @@ if (typeof (SD) != "undefined") {
                     var config = c.txtConfig.value;
                     utils.HTMLForm(JSON.parse(config));
                 });
+                _.on(c.btnHelp, false, e.OnClick, () => {
+                    sd.Help;
+                });
             }
         },
         /**
