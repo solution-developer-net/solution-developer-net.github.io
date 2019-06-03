@@ -21,7 +21,7 @@
 <hr />
 <h3>Basic</h3>
 <code>
-    var config = {
+    {
     Title:"Basic config",
     Data: {
     Master:{Id:"",Description:""},
@@ -39,115 +39,7 @@
 </code>
 <h3>Advanced</h3>
 <code>
-    var config = {
-    Title: "Registro de comprobante bancario",
-    Data: {
-    Master: { Id: "", Numero: answer.Response.d, Fecha: "", Descripcion: "", IdBanco: "",CodigoBanco:"",Banco:"", CuentaBancaria:""},
-    Detail: [{ Id: "", IdControlBancario:"",IdInterviniente:"",Interviniente:"",Monto:"",Observacion:"",Referencia:"",IdImpuesto:"",Impuesto:"",Alicuota:"",Iva:"",Retenciones:""}]
-    },
-    Buttons: {
-    Master: [
-    {
-    Id: "Search", Title: "", FA: "fa-search", Click: (loader) => {
-    utils.Request.Get("ControlBancarioBuscar", { numero: txtmNumero.value }, (ans) => {
-    if (ans.Status == "Done") {
-    var result = JSON.parse(ans.Response.d);
-    if (result != null) {
-    config.Data.Master = result.Master;
-    config.Data.Detail = result.Detail.length > 0 ? result.Detail : [{ Id: "", IdControlBancario: "", IdInterviniente: "", Interviniente: "", Monto: "", Observacion: "", Referencia: "", IdImpuesto: "", Impuesto: "", Alicuota: "", Iva: "", Retenciones: "" }];
-    utils.HTMLForm(config);
-    loader.Hide();
-    }
-    } else {
-    alert(project.FailMessage);
-    }
-    })
-    }
-    },
-    {
-    Id: "Save", Title: "Click para procesar", FA: "fa-save", Click: (loader) => {
-    var params = {
-    obj: JSON.stringify( {
-    Master: { Id: txtmId.value, Numero: txtmNumero.value, Fecha: txtmFecha.value, Descripcion: txtmDescripcion.value, IdBanco: txtmIdBanco.value, CodigoBanco: txtmCodigoBanco.value, Banco: txtmBanco.value, CuentaBancaria: txtmCuentaBancaria.value },
-    Detail: utils.Storage.Load("sdHTMLForm").jData().HTMLForm()
-    })
-    };
-    utils.Request.Post("ControlBancarioProcesar", params, (ans) => {
-    if (ans.Status == "Done") {
-    var result = JSON.parse(ans.Response.d);
-    if (result != null) {
-    config.Buttons.Master.filter(btn => { if (btn.Id == "Search") btn.Click(loader); });
-    }
-    } else {
-    alert(project.FailMessage);
-    }
-    });
-    }
-    }
-    ],
-    Detail: [
-    {
-    Id: "Search", Title: "", FA: "fa-search", Click: (loader) => {
+    { "Title":"Registro de comprobante bancario","Data":{"Master":{"Id":"","Numero":"CB19154-014","Fecha":"","Descripcion":"","IdBanco":"","CodigoBanco":"","Banco":"","CuentaBancaria":""},"Detail":[{"Id":"","IdControlBancario":"","IdInterviniente":"","Interviniente":"","Monto":"","Observacion":"","Referencia":"","IdImpuesto":"","Impuesto":"","Alicuota":"","Iva":"","Retenciones":""}]},"Buttons":{"Master":[{"Id":"Search","Title":"","FA":"fa-search"},{"Id":"Save","Title":"Click para procesar","FA":"fa-save"}],"Detail":[{"Id":"Search","Title":"","FA":"fa-search"}]},"ForeignKeyColumns":[{"Id":"txtmBanco","ServiceMethod":"bancos"},{"Id":"txtImpuesto","ServiceMethod":"impuestos"}],"InputWithActionColumns":[{"Id":"txtmBanco","Event":"blur"},{"Id":"txtImpuesto","Event":"blur"},{"Id":"txtCodigo","Event":"input"},{"Id":"txtStock","Event":"blur"}],"InputMasks":[{"Id":"txtmFecha","Mask":"dd/mm/yyyy","Slot":"dmy"},{"Id":"txtmNumero","Mask":"CB_____-___","Slot":"_"}],"CalculatedColumns":"","ReadonlyColumns":"Id*,Alicuota,CodigoBanco,CuentaBancaria","HiddenColumns":"Id*","CurrencyColumns":"Monto,Retenciones,Iva","CurrencyISOColumns":"Bs,Bs,Bs","InputHelpColumns":[{"Id":"txtmNumero","Help":"Numero generado por el sistema de forma automatica. tambien permite buscar un movimiento por este valor"}]}
 
-    ui.Modal.PlaceHolder = "Ej: Pedro Perez";
-    ui.Modal.Finder(function (o) {
-    var items = o.innerText.split(";");
-    txtIdInterviniente.value = o.parentElement.nextElementSibling.children[0].innerText;
-    txtInterviniente.value = items[1];
-    txtIdControlBancario.value = txtmId.value;
-    txtMonto.focus();
-    });
-    }
-    },
-    ]
-    },
-    ForeignKeyColumns: [
-    { Id: "txtmBanco", ServiceMethod: "bancos" },
-    { Id: "txtImpuesto", ServiceMethod: "impuestos" },
-    ],
-    InputWithActionColumns: [
-    {
-    Id: "txtmBanco", Event: e.OnBlur, Callback: function (o) {
-    var values = o.currentTarget.value.split(";");
-    txtmIdBanco.value = values[3];
-    txtmCodigoBanco.value = values[0];
-    o.currentTarget.value = values[1];
-    txtmCuentaBancaria.value = values[2];
-    }
-    },
-    {
-    Id: "txtImpuesto", Event: e.OnBlur, Callback: function (o) {
-    var values = o.currentTarget.value.split(";");
-    txtIdImpuesto.value = values[2];
-    txtAlicuota.value = values[1].replace(',','.');
-    o.currentTarget.value = values[0];
-    }
-    },
-    {
-    Id: "txtCodigo", Event: e.OnInput, Callback: function (o) {
-    var inputs = [{ Id: "txtCodigo", Event: e.OnInput, RegEx: /([A-Z]{2}\d{3}-\d{3})/, Message: "Ej. Codigo: AL000-000" },];
-    utils.InputValid(inputs);
-    }
-    },
-    {
-    Id: "txtStock", Event: e.OnBlur, Callback: function (o) {
-    o.target.value = o.target.value.toUpperCase();
-    }
-
-    }
-    ],
-    InputMasks: [
-    { Id: "txtmFecha", Mask: "dd/mm/yyyy", Slot: "dmy" },
-    { Id: "txtmNumero", Mask: "CB_____-___", Slot: "_" },
-    ],
-    CalculatedColumns:"",// "Iva=Monto*Alicuota",
-    ReadonlyColumns:"Id*,Alicuota,CodigoBanco,CuentaBancaria",
-    HiddenColumns: "Id*",
-    CurrencyColumns: "Monto,Retenciones,Iva",
-    CurrencyISOColumns: "Bs,Bs,Bs",
-    InputHelpColumns: [{Id:"txtmNumero", Help:"Numero generado por el sistema de forma automatica. tambien permite buscar un movimiento por este valor"}]
-
-    };
-
-    utils.HTMLForm(config);
+    
 </code>
