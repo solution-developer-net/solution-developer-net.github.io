@@ -1,0 +1,56 @@
+﻿<h4>SD.Javascript</h4>
+<p>Demo code for implement SD.Javascript</p>
+<style>
+    #divConfig {
+        width: 100%
+    }
+
+        #divConfig > textarea {
+            height: auto;
+            height: 150px;
+            font-size: .8em;
+            font-family: courier;
+        }
+</style>
+<div>
+<textarea id="txtConfig" class="form-control" data-label="Config for HTMLForm"></textarea>
+    <span><b id="btnRun" class="fa fa-play btn btn-info"></b></span>
+</div>
+<div id="frm"></div>
+
+<hr />
+<h3>Basic</h3>
+<code>
+    var config = {
+    Title:"Basic config",
+    Data: {
+    Master:{Id:"",Description:""},
+    Detail: [
+    { Id: "1", Description: "for add" },
+    { Id: "2", Description: "for modified" },
+    { Id: "3", Description: "for deleted" },
+    ]
+    },
+    ReadonlyColumns: "Id*",
+    InputHelpColumns: [{
+    Id:"txtmDescription",Help:"Help for this field"
+    }]
+    };
+</code>
+<h3>Advanced</h3>
+<code>
+    var config = {
+    Title:"Basic config",
+    Data: {
+    Detail: [
+    { Id: "1", Description: "for add" },
+    { Id: "2", Description: "for modified" },
+    { Id: "3", Description: "for deleted" },
+    ]
+    },
+    ReadonlyColumns: "Id*",
+    InputHelpColumns: [{
+    Id:"txtmDescription",Help:"Help for this field"
+    }]
+    };
+</code>
