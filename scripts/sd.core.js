@@ -9,7 +9,7 @@ function SD(ns) {
 /*----------------------------
  * Variable
  *----------------------------*/
-var _Version = "1.0.71";
+var _Version = "1.0.74";
 SD.STARTTIME = new Date();
 var _Window = window;
 var _Tracert = false;
@@ -354,7 +354,7 @@ SD.prototype.Utils = {
                     break;
                 }
                 default: {
-                    if (config.Data.Detail != undefined) {
+                    if (config.Data!=undefined && config.Data.Detail!= undefined) {
                         container.appendChild(filtro);
                         detailForm.appendChild(tableToDetail);
                         container.appendChild(detailForm);
@@ -510,7 +510,7 @@ SD.prototype.Utils = {
                 for (var a = 0; a < inputWidthFixed.length; a++) {
                     var input = inputWidthFixed[a];
                     if (input.Id == txt.id) {
-                        txt.style.width = `${!isNaN(input.Width) ? input.Width + "px" : input.Width}`;
+                        txt.style.width = `${!isNaN(input.Width)?input.Width+"px":input.Width}`;
                         continue;
                     }
                 }
@@ -631,7 +631,7 @@ SD.prototype.Utils = {
                                 items = JSON.parse(result.Response.d);
                             items.jData().ForEach(function (o) {
                                 var opt = _.ce("option");
-                                opt.value = o.Descripcion + ";" + o.Id;
+                                opt.value = _.in(o.Descripcion, o.Description) + ";" + o.Id;
                                 lblList.appendChild(opt);
                             });
                         }, nameList);
@@ -2396,7 +2396,7 @@ SD.prototype.UI = {
             var nombreContenedor = this.Contenedor;
             var itemsPorPagina = this.ItemsPorPagina;
             var maximoPaginasAMostrar = this.MaximoPaginas;
-            var addClassPagina = this.AgregarClaseCss;
+           var addClassPagina = this.AgregarClaseCss;
             /// <summary>Pï¿½ginador dinï¿½mico creado vï¿½a JavaScript.</summary>
             /// <param name="nombreContenedor" type="String">Nombre del contenedor para buscar el elemento por el metodo document.getElementById, donde se alojarï¿½n las nuevas pï¿½ginas generadas por el pï¿½ginador.</param>
             /// <param name="itemsPorPagina" type="Number">Indica la cantidad de elementos por pï¿½gina, por defecto se establece 5.</param>
