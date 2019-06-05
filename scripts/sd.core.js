@@ -9,7 +9,7 @@ function SD(ns) {
 /*----------------------------
  * Variable
  *----------------------------*/
-var _Version = "1.0.74";
+var _Version = "1.0.75";
 SD.STARTTIME = new Date();
 var _Window = window;
 var _Tracert = false;
@@ -371,7 +371,7 @@ SD.prototype.Utils = {
             } catch (e) { }
 
 
-            if (config.Data.Detail != undefined) {
+            if (config.Data!=undefined && config.Data.Detail!= undefined) {
                 if (render == "Table") {
                     self.parent.SD.UI.Tablas.Ordenacion._();
                     self.parent.SD.UI.Tablas.Busqueda._();
