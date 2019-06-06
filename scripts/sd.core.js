@@ -296,7 +296,38 @@ SD.prototype.Utils = {
         var _Object = _.in(config.Data != null ? config.Data.Master : { Id: "", Description: "" }, { Id: "", Description: "" });
         var _Items = _.in(config.Data != null ? config.Data.Detail : [{ Id: "", Description: "" }], [{ Id: "", Description: "" }]);
         var render = _.in(config.RenderAs, "Table");
-        var renderCustom = _.in(config.RenderCustom, (tag, item) => { });
+        var renderCustom = _.in(config.RenderCustom, (tag, item) => {
+            var a = _.ce("a");
+            a.innerHTML = item.Title;
+            a.href = "javascript:void";
+            a.onclick = (me) => {
+                var obj = JSON.parse(me.target.getAttribute("obj"));
+                txtmTitle.value = obj.Title;
+                txtmCategoryOriginal.value = obj.Category;
+                txtmCategory.value = "";
+                txtmSource.value = obj.Source;
+                txtmText.value = obj.Text;
+                txtmReference.value = obj.Link;
+                txtmImage.value = obj.Image;
+            }
+            a.setAttribute("obj", JSON.stringify(item));
+            var h2 = _.ce("h2");
+            h2.appendChild(a);
+            var p = _.ce("p");
+            p.innerHTML = item.Text;
+            var span = _.ce("span");
+            span.innerHTML = item.Category;
+            var small = _.ce("small");
+            small.innerHTML = item.Source;
+            var img = _.ce("img");
+            img.src = item.Image;
+            tag.appendChild(h2);
+            tag.appendChild(img);
+            tag.appendChild(span);
+            tag.appendChild(small);
+            tag.appendChild(p);
+            tag.setAttribute("data-source", item.Source);
+        });
 
         var fnRenderCUSTOM = () => {
             var ul = _.ne({ tag: "ul", id: "jList" + uk, cssClass: "jList jCustom" });
@@ -488,7 +519,7 @@ SD.prototype.Utils = {
                                 lblList.innerHTML = "";
                             var items = [];
                             if (result.Status == "Done")
-                                items = JSON.parse(result.Response.d);
+                                items =  result.Response.d;
                             items.jData().ForEach(function (o) {
                                 var opt = _.ce("option");
                                 opt.value = _.in(o.Descripcion, o.Description) + ";" + o.Id;
