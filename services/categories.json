@@ -1,0 +1,17 @@
+{
+  "d": [
+    {
+      "Id": 1,
+      "Description": "Deportes"
+    },
+
+    {
+      "Id": 2,
+      "Description": "Salud"
+    },
+    {
+      "Id": 3,
+      "Description": "Sucesos"
+    }
+  ]
+}
