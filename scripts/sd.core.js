@@ -9,7 +9,7 @@ function SD(ns) {
 /*----------------------------
  * Variable
  *----------------------------*/
-var _Version = "1.0.75";
+var _Version = "1.0.90";
 SD.STARTTIME = new Date();
 var _Window = window;
 var _Tracert = false;
@@ -27,6 +27,107 @@ SD.prototype.Events = {
     OnInput: "input",
     OnKeyPress: "keypress"
 };
+SD.prototype.Ascii = {
+    Euro: "&euro;",
+    Dolar: "&#36;",
+    Registred: "&reg;",
+    CopyRight: "&copy;",
+    PlusOrMinus: "&plusmn;",
+    TradeMark: "&#8482;"
+};
+SD.prototype.Theme = {
+    None: "None",
+    Basic: "Basic",
+    Delux: "Delux",
+    Silver:"Silver"
+};
+SD.prototype.Themes = [
+    {
+        Key: "None",
+        Id: {
+            jFormMaster: "frmMaster",
+            jFormDetail: "frmDetail",
+            jMenuMasterButtons: "ulMenuMaster",
+            jMenuDetailButtons: "ulMenuDetail"
+        },
+        Css: {
+            jFormContainer: "",
+            jForm: "",
+            jFormButton: "",
+            jFormMenuMasterButtons: "",
+            jFormMenuDetailButtons: "",
+            jTable: "",
+            jList: "",
+            jCustom: "",
+            jControlBox: ""
+        }
+    },
+    {
+        Key: "Basic",
+        Id: {
+            jFormMaster: "frmMaster",
+            jFormDetail: "frmDetail",
+            jMenuMasterButtons: "ulMenuMaster",
+            jMenuDetailButtons: "ulMenuDetail"
+        },
+        Css: {
+            jFormContainer: "jFormContainer",
+            jForm: "jForm",
+            jFormButton: "jButton",
+            jFormMenuMasterButtons: "jFormMenuMaster",
+            jFormMenuDetailButtons: "jFormMenuDetail",
+            jTable: "jTable",
+            jList: "jList",
+            jCustom: "jCustom",
+            jControlBox: "sdControlContainer"
+        }
+    },
+    {
+        Key: "Delux",
+        Id: {
+            jFormMaster: "sdFrmMaster",
+            jFormDetail: "sdFrmDetail",
+            jMenuMasterButtons: "sdFrmMenuMaster",
+            jMenuDetailButtons: "sdFrmMenuDetail"
+        },
+        Css: {
+            jFormContainer: "sdFormContainer",
+            jForm: "sdForm",
+            jFormButton: "sdButton",
+            jFormMenuMasterButtons: "sdFormMenuMaster",
+            jFormMenuDetailButtons: "sdFormMenuDetail",
+            jTable: "sdTable",
+            jList: "sdList",
+            jCustom: "sdCustom",
+            jControlBox: "sdControlBox"
+        }
+    },
+    {
+        Key: "Silver",
+        Id: {
+            jFormMaster: "sdSilverFrmMaster",
+            jFormDetail: "sdSilverFrmDetail",
+            jMenuMasterButtons: "sdSilverFrmMenuMaster",
+            jMenuDetailButtons: "sdSilverFrmMenuDetail"
+        },
+        Css: {
+            jFormContainer: "sdSilverFormContainer",
+            jForm: "sdSilverForm",
+            jFormButton: "sdSilverButton",
+            jFormMenuMasterButtons: "sdSilverFormMenuMaster",
+            jFormMenuDetailButtons: "sdSilverFormMenuDetail",
+            jTable: "sdSilverTable",
+            jList: "sdSilverList",
+            jCustom: "sdSilverCustom",
+            jControlBox: "sdSilverControlBox"
+        }
+    }
+];
+SD.prototype.Render = {
+    Table: "Table",
+    Custom: "Custom"
+};
+
 SD.prototype.Constructor = function () {
     var sd = this;
     var utils = this.Utils;
@@ -241,8 +342,12 @@ SD.prototype.Utils = {
         var uk = self.SD.Utils.Num2Hex(Math.round(Math.random() * 1000000));
         var container = _.fn(_.in(config.Container, "#frm"));
         var titleForm = _.in(config.Title, "SD Control > HTMLForm");
+        var theme = _.in(SD.Themes.find(t => {
+            return t.Key == _.in(config.Theme, "Basic");
+        }), SD.Themes[0]);
         var currentItem = null, currentIndex = 0;
         var colsOfData = [], entriesOfObject = [], txts = [];
+        var requiredFiedls = config.RequiredFields != undefined ? config.RequiredFields : { Master: true, Detail: true };
         var btns = config.Buttons != undefined ? config.Buttons : {
             Master: [
                 { Id: "Search", Title: "Search", FA: "fa-search", Click: (loader) => { loader.Hide(); /* YOUR CODE */ } },
@@ -278,6 +383,7 @@ SD.prototype.Utils = {
         var inputFKs = _.in(config.ForeignKeyColumns, [
             { Id: "Ex>dateInput", ServiceMethod: "mm/dd/yyyy" },
         ]);
+        var inputWithDatalist = _.in(config.InputWithDatalistColumns, [{ Id: "txt", List: [] }]);
         var inputEvents = _.in(config.InputWithActionColumns, [
             { Id: "txtField1", Event: "input", Callback: null },
         ]);
@@ -295,53 +401,37 @@ SD.prototype.Utils = {
         var isRO = _.in(config.ReadOnly, false);
         var _Object = _.in(config.Data != null ? config.Data.Master : { Id: "", Description: "" }, { Id: "", Description: "" });
         var _Items = _.in(config.Data != null ? config.Data.Detail : [{ Id: "", Description: "" }], [{ Id: "", Description: "" }]);
-        var render = _.in(config.RenderAs, "Table");
-        var renderCustom = _.in(config.RenderCustom, (tag, item) => {
-            var a = _.ce("a");
-            a.innerHTML = item.Title;
+        var render = _.in(config.RenderAs, SD.Render.Table);
+        var renderCustom = _.in(config.RenderCustom, (ul, item) => {
+            var a = _.ne({ tag: "a", innerHTML: "sometext" });
             a.href = "javascript:void";
             a.onclick = (me) => {
-                var obj = JSON.parse(me.target.getAttribute("obj"));
-                txtmTitle.value = obj.Title;
-                txtmCategoryOriginal.value = obj.Category;
-                txtmCategory.value = "";
-                txtmSource.value = obj.Source;
-                txtmText.value = obj.Text;
-                txtmReference.value = obj.Link;
-                txtmImage.value = obj.Image;
+                //Action
             }
-            a.setAttribute("obj", JSON.stringify(item));
-            var h2 = _.ce("h2");
-            h2.appendChild(a);
-            var p = _.ce("p");
-            p.innerHTML = item.Text;
-            var span = _.ce("span");
-            span.innerHTML = item.Category;
-            var small = _.ce("small");
-            small.innerHTML = item.Source;
-            var img = _.ce("img");
-            img.src = item.Image;
-            tag.appendChild(h2);
-            tag.appendChild(img);
-            tag.appendChild(span);
-            tag.appendChild(small);
-            tag.appendChild(p);
-            tag.setAttribute("data-source", item.Source);
+            var li = _.ce("li");
+            for (var i = 0; i < Object.keys(item).length; i++) {
+                var key = Object.keys(item)[i];
+                if (key != "Id") {
+                    li.appendChild(_.ne({ tag: "p", innerHTML: "<b>" + Object.keys(item)[i] + "</b>:" + Object.values(item)[i] }));
+                }
+            }
+            ul.appendChild(li);
         });
-
         var fnRenderCUSTOM = () => {
-            var ul = _.ne({ tag: "ul", id: "jList" + uk, cssClass: "jList jCustom" });
-            _Items.jForEach(function (item) {
-                var li = _.ne({ tag: "li" });
-                renderCustom(li, item);
+            var ul = _.ne({ tag: "ul", id: "jList" + uk, cssClass: `${theme.Css.jList} ${theme.Css.jCustom} ` });
+            if (_Items.length > 0)
+                _Items.jForEach(function (item) {
+                    renderCustom(ul, item);
+                }); else {
+                var li = _.ne({ tag: "li", innerHTML: ":--[ No data..." });
                 ul.appendChild(li);
-            });
+            }
             return ul;
         };
         var refresh = () => {
 
             container.innerHTML = "";
-            container.setAttribute("class", "jFormContainer");
+            container.setAttribute("class", theme.Css.jFormContainer);
             loader = _.ce("div", null, "sdHTMLForm_Loader");
             loader.style.display = "none";
             loader.classList.add("sdLoader");
@@ -361,7 +451,7 @@ SD.prototype.Utils = {
             container.appendChild(masterForm);
             self.parent.SD.UI.Labels();
             switch (render) {
-                case "Custom": {
+                case SD.Render.Custom: {
                     container.appendChild(filtro);
                     container.appendChild(fnRenderCUSTOM());
                     //Aplica filtro para la lista y no la tabla
@@ -385,8 +475,8 @@ SD.prototype.Utils = {
                     break;
                 }
                 default: {
-                    if (config.Data!=undefined && config.Data.Detail!= undefined) {
-                        container.appendChild(filtro);
+                    if (config.Data != undefined && config.Data.Detail != undefined) {
+                        if (!isRO) container.appendChild(filtro);
                         detailForm.appendChild(tableToDetail);
                         container.appendChild(detailForm);
                     }
@@ -402,8 +492,8 @@ SD.prototype.Utils = {
             } catch (e) { }
 
 
-            if (config.Data!=undefined && config.Data.Detail!= undefined) {
-                if (render == "Table") {
+            if (config.Data != undefined && config.Data.Detail != undefined) {
+                if (render == SD.Render.Table) {
                     self.parent.SD.UI.Tablas.Ordenacion._();
                     self.parent.SD.UI.Tablas.Busqueda._();
                     filtro.onkeyup = function () {
@@ -519,7 +609,7 @@ SD.prototype.Utils = {
                                 lblList.innerHTML = "";
                             var items = [];
                             if (result.Status == "Done")
-                                items =  result.Response.d;
+                                items = JSON.parse(result.Response.d);
                             items.jData().ForEach(function (o) {
                                 var opt = _.ce("option");
                                 opt.value = _.in(o.Descripcion, o.Description) + ";" + o.Id;
@@ -527,6 +617,26 @@ SD.prototype.Utils = {
                             });
                         }, nameList);
 
+                    }
+                }
+                //Inputs with DataList
+                for (var a = 0; a < inputWithDatalist.length; a++) {
+                    var input = inputWithDatalist[a];
+                    if (input.Id == txt.id) {
+                        var nameList = txt.id + "_list";
+                        txt.setAttribute("list", nameList);
+                        var lblList = document.getElementById(nameList);
+                        if (lblList === null) {
+                            lblList = _.ce("datalist", null, nameList);
+                            txt.parentNode.insertBefore(lblList, txt.nextSibling);
+                        } else
+                            lblList.innerHTML = "";
+                        var items = input.List;
+                        items.jData().ForEach(function (o) {
+                            var opt = _.ce("option");
+                            opt.value = o;
+                            lblList.appendChild(opt);
+                        });
                     }
                 }
                 //inputEvents Fields
@@ -541,33 +651,51 @@ SD.prototype.Utils = {
                 for (var a = 0; a < inputWidthFixed.length; a++) {
                     var input = inputWidthFixed[a];
                     if (input.Id == txt.id) {
-                        txt.style.width = `${!isNaN(input.Width)?input.Width+"px":input.Width}`;
+                        txt.style.width = `${!isNaN(input.Width) ? input.Width + "px" : input.Width}`;
+                        continue;
+                    }
+                }
+                //Currency ISO Columns
+                for (var a = 0; a < curCols.length; a++) {
+                    if (curCols[a] == col) {
+                        txt.style.textAlign = "right";
+                        txt.value = txt.value.ToFloat().jFormat(curISOCols[a], 2, 3, ".", ",");
                         continue;
                     }
                 }
             }
+
             //Agregando Botones
+
             if (btns.Master != undefined ? btns.Master.length : 0 > 0) {
+                var ulMenuMasterButtons = _.ne({ tag: "ul", id: theme.Id.jMenuMasterButtons, cssClass: theme.Css.jFormMenuMasterButtons });
                 btns.Master.jData().ForEach(function (btn) {
-                    var b = _.ce("b", "input", "btn" + btn.Id, btn.Title, "fa " + btn.FA + " fa-lg jTableButton");
+                    var li = _.ne({ tag: "li" });
+                    var b = _.ne({ tag: "b", type: "input", id: "btn" + btn.Id, title: btn.Title, cssClass: "fa " + btn.FA + " fa-lg " + theme.Css.jFormButton });
                     b.onclick = () => {
                         loader.Show();
                         btn.Click(loader);
                     }
-                    masterForm.appendChild(b);
+                    var span = _.ne({ tag: "span", innerHTML: btn.Id });
+                    b.appendChild(span);
+                    li.appendChild(b);
+                    ulMenuMasterButtons.appendChild(li);
                 });
+                masterForm.appendChild(ulMenuMasterButtons);
             }
 
         }
         var buildHeader = () => {
             var titlesTR = tHeadToDetail.insertRow();
-            titlesTR.appendChild(document.createElement("th"));
-            titlesTR.cells[0].innerHTML = 'Menu';
+            if (!isRO) {
+                titlesTR.appendChild(document.createElement("th"));
+                titlesTR.cells[0].innerHTML = 'Menu';
+            }
             //header TR
-            for (var i = 1; i < colsOfData.length + 1; i++) {
+            for (var i = (isRO ? 0 : 1); i < colsOfData.length + (isRO ? 0 : 1); i++) {
                 titlesTR.appendChild(document.createElement("th"));
                 var cell = titlesTR.cells[i];
-                var col = colsOfData[i - 1];
+                var col = colsOfData[i - (isRO ? 0 : 1)];
                 cell.innerHTML = col;
                 //Hidden Columns
                 for (var a = 0; a < hideenCols.length; a++) {
@@ -585,119 +713,144 @@ SD.prototype.Utils = {
             var fieldsTR = tHeadToDetail.insertRow();
             fieldsTR.appendChild(document.createElement("th"));
             var cellControls = fieldsTR.cells[0];
-            //header Inputs  
-            for (var i = 1; i < colsOfData.length + 1; i++) {
-                fieldsTR.appendChild(document.createElement("th"));
-                var cellInputs = fieldsTR.cells[i];
-                var col = colsOfData[i - 1];
-                var txt = _.ce("input", "Text", "txt" + col, col, "form-control");
-                // Calculated Columns
-                for (var a = 0; a < calCols.length; a++) {
-                    var fx = calCols[a].split('=');
-                    if (fx[0] == col) {
-                        txt.disabled = true;
-                        continue;
-                    }
-                }
-                //Readonly Fields
-                for (var a = 0; a < roCols.length; a++) {
-                    if (roCols[a] == "Id*" && col.indexOf("Id") > -1) {
-                        txt.disabled = true;
-                        continue;
-                    }
-                    if (roCols[a] == col) {
-                        txt.disabled = true;
-                        continue;
-                    }
-                    if (col == "State")
-                        txt.disabled = true;
-                }
-                txt.placeholder = col;
-                txt.setAttribute("data-label", col);
-                cellInputs.appendChild(txt);
-                txts["txt" + col] = txt;
-                if (isRO) {
-                    txt.disabled = true;
-                }
-                //Hidden Columns
-                for (var a = 0; a < hideenCols.length; a++) {
-                    if (hideenCols[a] == "Id*" && col.indexOf("Id") > -1) {
-                        cellInputs.style.display = "none";
-                        continue;
-                    }
-                    if (hideenCols[a] == col) {
-                        cellInputs.style.display = "none";
-                        continue;
-                    }
-                }
-                //InputMasks Fields
-                for (var a = 0; a < inputMasks.length; a++) {
-                    var input = inputMasks[a];
-                    if (input.Id == txt.id) {
-                        txt.setAttribute("placeholder", input.Mask);
-                        txt.setAttribute("data-mask", input.Mask);
-                        txt.setAttribute("data-slots", input.Slot);
-                        if (input.Accept != undefined)
-                            txt.setAttribute("data-accept", input.Accept);
-                        continue;
-                    }
-                }
-                //Foreign Keyls 
-                for (var a = 0; a < inputFKs.length; a++) {
-                    var input = inputFKs[a];
-                    if (input.Id == txt.id) {
-                        var nameList = txt.id + "_list";
-                        txt.setAttribute("list", nameList);
 
-                        self.SD.Utils.Request.Get(input.ServiceMethod, null, (result, selector) => {
-                            var lblList = document.getElementById(selector);
+            if (!isRO) {
+                //header Inputs
+                for (var i = 1; i < colsOfData.length + 1; i++) {
+                    fieldsTR.appendChild(document.createElement("th"));
+                    var cellInputs = fieldsTR.cells[i];
+                    var col = colsOfData[i - 1];
+                    var txt = _.ce("input", "Text", "txt" + col, col, "form-control");
+                    // Calculated Columns
+                    for (var a = 0; a < calCols.length; a++) {
+                        var fx = calCols[a].split('=');
+                        if (fx[0] == col) {
+                            txt.disabled = true;
+                            continue;
+                        }
+                    }
+                    //Readonly Fields
+                    for (var a = 0; a < roCols.length; a++) {
+                        if (roCols[a] == "Id*" && col.indexOf("Id") > -1) {
+                            txt.disabled = true;
+                            continue;
+                        }
+                        if (roCols[a] == col) {
+                            txt.disabled = true;
+                            continue;
+                        }
+                        if (col == "State")
+                            txt.disabled = true;
+                    }
+                    txt.placeholder = col;
+                    txt.setAttribute("data-label", col);
+                    cellInputs.appendChild(txt);
+                    txts["txt" + col] = txt;
+                    if (isRO) {
+                        txt.disabled = true;
+                    }
+                    //Hidden Columns
+                    for (var a = 0; a < hideenCols.length; a++) {
+                        if (hideenCols[a] == "Id*" && col.indexOf("Id") > -1) {
+                            cellInputs.style.display = "none";
+                            continue;
+                        }
+                        if (hideenCols[a] == col) {
+                            cellInputs.style.display = "none";
+                            continue;
+                        }
+                    }
+                    //InputMasks Fields
+                    for (var a = 0; a < inputMasks.length; a++) {
+                        var input = inputMasks[a];
+                        if (input.Id == txt.id) {
+                            txt.setAttribute("placeholder", input.Mask);
+                            txt.setAttribute("data-mask", input.Mask);
+                            txt.setAttribute("data-slots", input.Slot);
+                            if (input.Accept != undefined)
+                                txt.setAttribute("data-accept", input.Accept);
+                            continue;
+                        }
+                    }
+                    //Foreign Keyls 
+                    for (var a = 0; a < inputFKs.length; a++) {
+                        var input = inputFKs[a];
+                        if (input.Id == txt.id) {
+                            var nameList = txt.id + "_list";
+                            txt.setAttribute("list", nameList);
+
+                            self.SD.Utils.Request.Get(input.ServiceMethod, null, (result, selector) => {
+                                var lblList = document.getElementById(selector);
+                                if (lblList === null) {
+                                    lblList = _.ce("datalist", null, selector);
+                                    txt.parentNode.insertBefore(lblList, txt.nextSibling);
+                                } else
+                                    lblList.innerHTML = "";
+
+                                var items = [];
+                                if (result.Status == "Done")
+                                    items = JSON.parse(result.Response.d);
+                                items.jData().ForEach(function (o) {
+                                    var opt = _.ce("option");
+                                    opt.value = _.in(o.Descripcion, o.Description) + ";" + o.Id;
+                                    lblList.appendChild(opt);
+                                });
+                            }, nameList);
+
+                        }
+                    }
+                    //Inputs with DataList
+                    for (var a = 0; a < inputWithDatalist.length; a++) {
+                        var input = inputWithDatalist[a];
+                        if (input.Id == txt.id) {
+                            var nameList = txt.id + "_list";
+                            txt.setAttribute("list", nameList);
+                            var lblList = document.getElementById(nameList);
                             if (lblList === null) {
-                                lblList = _.ce("datalist", null, selector);
+                                lblList = _.ce("datalist", null, nameList);
                                 txt.parentNode.insertBefore(lblList, txt.nextSibling);
                             } else
                                 lblList.innerHTML = "";
-
-                            var items = [];
-                            if (result.Status == "Done")
-                                items = JSON.parse(result.Response.d);
+                            var items = input.List;
                             items.jData().ForEach(function (o) {
                                 var opt = _.ce("option");
-                                opt.value = _.in(o.Descripcion, o.Description) + ";" + o.Id;
+                                opt.value = o;
                                 lblList.appendChild(opt);
                             });
-                        }, nameList);
+                        }
+                    }
 
+                    //inputEvents Fields
+                    for (var a = 0; a < inputEvents.length; a++) {
+                        var input = inputEvents[a];
+                        if (input.Id == txt.id) {
+                            txt.addEventListener(input.Event, input.Callback)
+                            continue;
+                        }
+                    }
+                    //inputWidthFixed
+                    for (var a = 0; a < inputWidthFixed.length; a++) {
+                        var input = inputWidthFixed[a];
+                        if (input.Id == txt.id) {
+                            txt.style.width = `${input.Width}px`;
+                            continue;
+                        }
                     }
                 }
-                //inputEvents Fields
-                for (var a = 0; a < inputEvents.length; a++) {
-                    var input = inputEvents[a];
-                    if (input.Id == txt.id) {
-                        txt.addEventListener(input.Event, input.Callback)
-                        continue;
-                    }
-                }
-                //inputWidthFixed
-                for (var a = 0; a < inputWidthFixed.length; a++) {
-                    var input = inputWidthFixed[a];
-                    if (input.Id == txt.id) {
-                        txt.style.width = `${input.Width}px`;
-                        continue;
-                    }
-                }
-            }
 
-            var ul = document.createElement("ul");
-            ul.className = "buttonsCommand";
-            var ulSub = document.createElement("ul");
-            var liMenu = document.createElement("li");
-            var li = null;
+                var ul = _.ne({ tag: "ul", id: theme.Id.jMenuDetailButtons, cssClass: theme.Css.jFormMenuDetailButtons });
+                var ulSub = document.createElement("ul");
+                var liMenu = document.createElement("li");
+                var li = null;
 
-            //Buttons To Header on Table
-            if (!isRO) {
+                //Buttons To Header on Table
+
+
+
+
                 //Button Add
                 li = document.createElement("li");
-                var btnAdd = _.ce("b", null, "btnAdd", "Add", "fa fa-plus fa-lg jTableButton");
+                var btnAdd = _.ce("b", null, "btnAdd", "Add", "fa fa-plus fa-lg " + theme.Css.jFormButton);
                 btnAdd.onclick = function () {
                     //Callback Execute Click Before Add
                     try {
@@ -709,16 +862,24 @@ SD.prototype.Utils = {
                         o[colsOfData[i]] = txts["txt" + colsOfData[i]].value;
                     }
                     o.State = "Added";
-                    self.parent.SD.Utils.Validation.Container("frmDetail");
-                    var valid = self.parent.SD.Utils.Validation.Validate();
-                    if (valid) {
+                    if (requiredFiedls.Detail) {
+                        self.parent.SD.Utils.Validation.Container("frmDetail");
+                        var valid = self.parent.SD.Utils.Validation.Validate();
+                        if (valid) {
+                            _Items.jAdd(o);
+                            tBodyToDetail.innerHTML = "";
+                            buildBody();
+                            clearTxts();
+                        } else {
+                            alert("faltan campos por rellenar");
+                        }
+                    } else {
                         _Items.jAdd(o);
                         tBodyToDetail.innerHTML = "";
                         buildBody();
                         clearTxts();
-                    } else {
-                        alert("faltan campos por rellenar");
                     }
+
                     //Callback Execute Click After Edit
                     try {
                         if (config.Callbacks.Render.After.Add != undefined)
@@ -729,7 +890,7 @@ SD.prototype.Utils = {
                 ulSub.appendChild(li);
                 //Button Edit
                 li = document.createElement("li");
-                var btnEdit = _.ce("b", null, "btnEdit", "Edit", "fa fa-pencil fa-lg jTableButton");
+                var btnEdit = _.ce("b", null, "btnEdit", "Edit", "fa fa-pencil fa-lg " + theme.Css.jFormButton);
                 btnEdit.onclick = function () {
                     //Callback Execute Click Before Edit
                     try {
@@ -755,34 +916,34 @@ SD.prototype.Utils = {
                 if ((btns.Detail != undefined ? btns.Detail.length : 0) > 0) {
                     btns.Detail.jData().ForEach(function (btn) {
                         var li = document.createElement("li");
-                        var b = _.ce("b", "input", "btn" + btn.Id, btn.Title, "fa " + btn.FA + " fa-lg jTableButton");
+                        var b = _.ce("b", "input", "btn" + btn.Id, btn.Title, "fa " + btn.FA + " fa-lg " + theme.Css.jFormButton);
                         b.onclick = btn.Click;
                         li.appendChild(b);
                         ulSub.appendChild(li);
                     });
                 }
+                // Menu Button
+                li = document.createElement("li");
+                var btnMenu = _.ce("b", null, "btnMenu", "Menu", "fa fa-caret-down fa-lg " + theme.Css.jFormButton);
+                liMenu.appendChild(btnMenu);
+                liMenu.appendChild(ulSub);
+                ul.appendChild(liMenu);
+
+
+
+                cellControls.appendChild(ul);
             }
-
-            li = document.createElement("li");
-            var btnMenu = _.ce("b", null, "btnMenu", "Menu", "fa fa-caret-down fa-lg jTableButton");
-            liMenu.appendChild(btnMenu);
-            liMenu.appendChild(ulSub);
-            ul.appendChild(liMenu);
-
-
-
-            cellControls.appendChild(ul);
-
         };
         var buildBody = () => {
 
             _Items.jForEach(function (item) {
                 var row = tBodyToDetail.insertRow();
                 row.setAttribute("data-sdRowLocator", Object.values(item)[0]);
-                var commandsCell = row.insertCell();
+
                 if (!isRO) {
+                    var commandsCell = row.insertCell();
                     row.onclick = function () {
-                        _.fn(".jTable>tbody>tr", true).jData().ForEach(function (a) {
+                        _.fn("." + theme.Css.jTable + ">tbody>tr", true).jData().ForEach(function (a) {
                             a.classList.remove("selected");
                         });
                         this.classList.add("selected");
@@ -799,7 +960,7 @@ SD.prototype.Utils = {
                     };
 
                     var btnLineDel = document.createElement("b");
-                    btnLineDel.className = "fa fa-trash fa-lg jTableButton";
+                    btnLineDel.className = "fa fa-trash fa-lg " + theme.Css.jFormButton;
                     btnLineDel.title = "Delete";
                     btnLineDel.onclick = function () {
                         alert("Are you sure to Delete?", function () {
@@ -815,7 +976,7 @@ SD.prototype.Utils = {
 
                     if ((btns.Items != undefined ? btns.Items.length : 0) > 0) {
                         btns.Items.jData().ForEach(function (btn) {
-                            var b = _.ce("b", "input", "btn" + btn.Id, btn.Title, "fa " + btn.FA + " fa-lg jTableButton");
+                            var b = _.ce("b", "input", "btn" + btn.Id, btn.Title, "fa " + btn.FA + " fa-lg " + theme.Css.jFormButton);
                             b.onclick = btn.Click;
                             commandsCell.appendChild(b);
                         });
@@ -830,6 +991,10 @@ SD.prototype.Utils = {
                     if (i == 0) {
                         var a = document.createElement("a");
                         a.classList.add("btnSelect");
+                        a.href = "javascript:void(0)";
+                        a.onclick = (a) => {
+                            config.Buttons.First(a.target.innerText.trim());
+                        }
                         a.innerHTML = "<b class='fa fa-edit'></b> " + item[column];
                         cell.appendChild(a);
                     } else {
@@ -903,10 +1068,12 @@ SD.prototype.Utils = {
         };
         var buildFooter = () => {
             var row = tFootToDetail.insertRow();
-            row.appendChild(document.createElement("th"));
-            for (var i = 1; i < colsOfData.length + 1; i++) {
+            if (!isRO)
                 row.appendChild(document.createElement("th"));
-                var column = colsOfData[i - 1];
+
+            for (var i = (isRO ? 0 : 1); i < colsOfData.length + (isRO ? 0 : 1); i++) {
+                row.appendChild(document.createElement("th"));
+                var column = colsOfData[i - (isRO ? 0 : 1)];
                 var cell = row.cells[i];
                 //Currency ISO Columns
                 for (var a = 0; a < curCols.length; a++) {
@@ -933,8 +1100,8 @@ SD.prototype.Utils = {
         if (_Object != null) {
             entriesOfObject = Object.entries(_Object);
             var masterForm = document.createElement("div");
-            masterForm.id = "frmMaster";
-            masterForm.classList.add("jForm");
+            masterForm.id = theme.Id.jFormMaster;
+            masterForm.setAttribute("class", theme.Css.jForm);
             buildMaster();
         }
         //var span = document.createElement("span");
@@ -944,10 +1111,10 @@ SD.prototype.Utils = {
             colsOfData[colsOfData.length] = "State";
         }
         var detailForm = document.createElement("div");
-        detailForm.id = "frmDetail";
+        detailForm.id = theme.Id.jFormDetail;
         var tableToDetail = document.createElement("table");
         tableToDetail.id = "listado";
-        tableToDetail.classList.add("jTable");
+        tableToDetail.setAttribute("class", theme.Css.jTable);
         var tHeadToDetail = document.createElement("thead");
         var tBodyToDetail = document.createElement("tbody");
         var tFootToDetail = document.createElement("tfoot");
@@ -971,14 +1138,32 @@ SD.prototype.Utils = {
         var uk = self.SD.Utils.Num2Hex(Math.round(Math.random() * 1000000));
         var container = _.fn(_.in(config.Container, "#frm"));
         var filtro = _.ne({ tag: "input", type: "text", id: "jFilter" + uk, placeHolder: config.PlaceHolder, cssClass: "form-control" });
+        var renderCustom = _.in(config.RenderCustom, (ul, item) => {
+            var a = _.ne({ tag: "a", innerHTML: "sometext" });
+            a.href = "javascript:void";
+            a.onclick = (me) => {
+                //Action
+            }
+            for (var i = 0; i < Object.keys(item).length; i++) {
+                var key = Object.keys(item)[i];
+                if (key != "Id") {
+                    var li = _.ce("li");
+                    li.innerHTML = "<b>" + Object.keys(item)[i] + "</b>:" + Object.values(item)[i];
+                    ul.appendChild(li);
+                }
+            }
+        });
         container.Clear();
 
         var ul = _.ne({ tag: "ul", id: "jList" + uk, cssClass: "jList" });
-        config.Data.jForEach(function (item) {
-            var li = _.ne({ tag: "li" });
-            config.RenderCustom(li, item);
+        if (config.Data.length > 0)
+            config.Data.jForEach(function (item) {
+                renderCustom(ul, item);
+            });
+        else {
+            var li = _.ne({ tag: "li", innerHTML: ":--[ No data..." });
             ul.appendChild(li);
-        });
+        }
         if (config.IncludeFilter) {
 
             container.appendChild(filtro);
@@ -1328,7 +1513,7 @@ SD.prototype.Utils = {
                 type = "GET";
             }
             else
-                path = `${project.ServiceUrl}${url}`;
+                path = `${project.Root}${project.ServiceUrl}${url}`;
             var request = new XMLHttpRequest();
             request.onreadystatechange = function () {
                 var data = {
@@ -1397,6 +1582,9 @@ SD.prototype.Utils = {
         },
         Post: (url, params, callback, selector) => {
             this.SD.Utils.Request.Base('POST', url, callback, selector, params);
+        },
+        Invoke: ({ url, type, params, callback, selector } = {}) => {
+            this.SD.Utils.Request.Base(_.in(type, 'GET'), url, callback, selector, params);
         }
     },
     Callback: function (url, parametros, callback, selector) {
@@ -2427,7 +2615,7 @@ SD.prototype.UI = {
             var nombreContenedor = this.Contenedor;
             var itemsPorPagina = this.ItemsPorPagina;
             var maximoPaginasAMostrar = this.MaximoPaginas;
-           var addClassPagina = this.AgregarClaseCss;
+            var addClassPagina = this.AgregarClaseCss;
             /// <summary>Pï¿½ginador dinï¿½mico creado vï¿½a JavaScript.</summary>
             /// <param name="nombreContenedor" type="String">Nombre del contenedor para buscar el elemento por el metodo document.getElementById, donde se alojarï¿½n las nuevas pï¿½ginas generadas por el pï¿½ginador.</param>
             /// <param name="itemsPorPagina" type="Number">Indica la cantidad de elementos por pï¿½gina, por defecto se establece 5.</param>
@@ -3387,6 +3575,9 @@ try {
     /* -------------------------------------------------------------------
     * Extending JavaScript prototypes to increase the performance
     * ------------------------------------------------------------------- */
+    Object.prototype.ToJsonStringify = function () {
+        return JSON.stringify(this)
+    }
     HTMLCollection.prototype.ToArray = function () {
         if (_Tracert) {
             _.cl('method: "HTMLCollection.ToArray()", has loaded successfuly');
@@ -4185,7 +4376,7 @@ try {
                  * @param ifnull Return only first element whether is true value
                  */
                 in: function (object, ifnull) {
-                    if (object === null || object === undefined)
+                    if (object === null || object === undefined || (object.Type == "Array" && object.length == 0))
                         return ifnull;
                     return object;
                 },
