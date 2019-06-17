@@ -1,3 +1,215 @@
+/* Animations */
+@keyframes sdIconAnim {
+    0% {
+        color: #8f86b3;
+    }
+
+    25% {
+        color: white;
+    }
+
+    50% {
+        color: blue;
+    }
+
+    100% {
+        color: #8f86b3;
+    }
+}
+/* Common Controls */
+.buttonsCommand {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+    .buttonsCommand > li {
+        display: inline-block
+    }
+
+        .buttonsCommand > li > ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: none;
+            position: absolute;
+        }
+
+        .buttonsCommand > li:hover > ul {
+            display: block;
+        }
+
+.highlighted {
+    background: yellow;
+}
+
+#modalContainer {
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: 10000;
+    background-image: url(tp.png); /* required by MSIE to prevent actions on lower z-index elements */
+}
+
+#alertBox {
+    position: relative;
+    width: 300px;
+    min-height: 100px;
+    margin-top: 50px;
+    border: 1px solid #666;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: 20px 30px;
+}
+
+#modalContainer > #alertBox {
+    position: fixed;
+}
+
+#alertBox h1 {
+    margin: 0;
+    font: bold 0.9em verdana,arial;
+    background-color: #3073BB;
+    color: #FFF;
+    border-bottom: 1px solid #000;
+    padding: 2px 0 2px 5px;
+}
+
+#alertBox p {
+    font: 0.7em verdana,arial;
+    padding-left: 5px;
+    margin-left: 40px;
+    text-align: justify;
+    margin-right: 36px;
+    font-size: .85em;
+    padding-top: 1em;
+}
+
+    #alertBox p:before {
+        content: "i";
+        font-size: 2.5em;
+        color: #357ebd;
+        position: absolute;
+        left: 10px;
+        font-family: Webdings;
+    }
+
+#alertBox div {
+    text-align: center
+}
+
+
+
+#alertBox #closeBtn, #alertBox #cancelBtn {
+    display: inline-block;
+    position: relative;
+    margin: 5px 1em;
+    padding: 7px;
+    border: 0 none;
+    width: 70px;
+    font: 0.7em verdana,arial;
+    text-transform: uppercase;
+    text-align: center;
+    color: #FFF;
+    background-color: #357EBD;
+    border-radius: 3px;
+    text-decoration: none;
+}
+
+.jHelp {
+    position: absolute;
+    background: #2e6e9e;
+    border: 1px solid;
+    padding: .3em 1em;
+    color: white;
+    font-size: 10px;
+    border-radius: 4px;
+    margin-top: -35px;
+    margin-left: 32px;
+    font-family: tahoma;
+    font-weight: 100;
+    max-width: 300px;
+    min-width: 200px;
+    z-index: 1;
+}
+
+    .jHelp:after {
+        content: "";
+        bottom: -10px;
+        border: 5px solid transparent;
+        border-top-color: #2e6e9e;
+        position: absolute;
+        left: 5px;
+    }
+
+    .jHelp ~ sdIcon:before {
+        content: "i";
+        color: #8f86b3;
+        position: absolute;
+        font-size: 12px;
+        font-family: webdings;
+        font-weight: 100;
+        animation-name: sdIconAnim;
+        animation-duration: 10s;
+        animation-delay: 6s;
+        animation-iteration-count: infinite;
+    }
+
+sdIcon {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    text-align: center;
+}
+
+
+div#jHelp {
+    background: #dfeffc;
+    padding: 2em;
+    position: fixed;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+    box-shadow: 5px 5px 20px #9595a2;
+    font-size: 1.3em;
+    font-family: courier new;
+    overflow: hidden;
+}
+
+    div#jHelp > div {
+        overflow-y: scroll;
+        height: 88%;
+    }
+
+    div#jHelp > span {
+        position: absolute;
+        top: .5em;
+        right: 1em;
+        cursor: pointer
+    }
+
+ul#sdHelp > li b {
+    color: #4080b5;
+}
+
+ul#sdHelp > li > h6 {
+    color: #4080b5;
+    font-size: 2em;
+}
+
+ul#sdHelp > li {
+    margin-bottom: 2em;
+    border-bottom: 1px dotted #0921ae;
+    padding-bottom: 1em;
+}
+
+
+/* styles SD.Theme.Basic */
+
 .jTable {
     width: 100%;
 }
@@ -84,123 +296,26 @@
     font-size: .9em;
 }
 
-.jTableButton {
+.jButton {
     display: inline-block;
     border: 1px solid lightgray;
     width: 32px;
     height: 32px;
     text-align: center;
     float: right;
-    padding: 10px;
+    padding: 9px 7px;
     background: white;
     cursor: pointer;
     border-radius: 50%;
     color: #337ab7;
 }
 
-    .jTableButton:hover {
+    .jButton:hover {
         background-color: cornflowerblue;
         color: white;
     }
 
-.buttonsCommand {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
 
-    .buttonsCommand > li {
-        display: inline-block
-    }
-
-        .buttonsCommand > li > ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: none;
-            position: absolute;
-        }
-
-        .buttonsCommand > li:hover > ul {
-            display: block;
-        }
-
-
-#modalContainer {
-    background-color: rgba(0, 0, 0, 0.3);
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0px;
-    left: 0px;
-    z-index: 10000;
-    background-image: url(tp.png); /* required by MSIE to prevent actions on lower z-index elements */
-}
-
-#alertBox {
-    position: relative;
-    width: 300px;
-    min-height: 100px;
-    margin-top: 50px;
-    border: 1px solid #666;
-    background-color: #fff;
-    background-repeat: no-repeat;
-    background-position: 20px 30px;
-}
-
-#modalContainer > #alertBox {
-    position: fixed;
-}
-
-#alertBox h1 {
-    margin: 0;
-    font: bold 0.9em verdana,arial;
-    background-color: #3073BB;
-    color: #FFF;
-    border-bottom: 1px solid #000;
-    padding: 2px 0 2px 5px;
-}
-
-#alertBox p {
-    font: 0.7em verdana,arial;
-    padding-left: 5px;
-    margin-left: 40px;
-    text-align: justify;
-    margin-right: 36px;
-    font-size: .85em;
-    padding-top: 1em;
-}
-
-    #alertBox p:before {
-        content: "i";
-        font-size: 2.5em;
-        color: #357ebd;
-        position: absolute;
-        left: 10px;
-        font-family: Webdings;
-    }
-
-#alertBox div {
-    text-align: center
-}
-
-
-
-#alertBox #closeBtn, #alertBox #cancelBtn {
-    display: inline-block;
-    position: relative;
-    margin: 5px 1em;
-    padding: 7px;
-    border: 0 none;
-    width: 70px;
-    font: 0.7em verdana,arial;
-    text-transform: uppercase;
-    text-align: center;
-    color: #FFF;
-    background-color: #357EBD;
-    border-radius: 3px;
-    text-decoration: none;
-}
 
 
 .sdControlContainer {
@@ -230,100 +345,40 @@
         color: #2e6e9e;
     }
 
-    .jForm .jTableButton {
-        position: absolute;
+    .jForm .jButton {
         top: .5em;
         right: .5em;
     }
 
 
-    .jForm > .jTableButton:nth-child(2) {
+    .jForm > .jButton:nth-child(2) {
         right: 2.5em !important;
     }
 
-    .jForm > .jTableButton:nth-child(3) {
+    .jForm > .jButton:nth-child(3) {
         right: 4.5em !important;
     }
 
-    .jForm > .jTableButton:nth-child(4) {
+    .jForm > .jButton:nth-child(4) {
         right: 6.5em !important;
     }
 
-    .jForm > .jTableButton:nth-child(5) {
+    .jForm > .jButton:nth-child(5) {
         right: 8.5em !important;
     }
 
-    .jForm > .jTableButton:nth-child(6) {
+    .jForm > .jButton:nth-child(6) {
         right: 10.5em !important;
     }
 
-.highlighted {
-    background: yellow;
+
+ul.jFormMenuMaster {
+    list-style: none;
 }
 
-.jHelp {
-    position: absolute;
-    background: #2e6e9e;
-    border: 1px solid;
-    padding: .3em 1em;
-    color: white;
-    font-size: 10px;
-    border-radius: 4px;
-    margin-top: -35px;
-    margin-left: 32px;
-    font-family: tahoma;
-    font-weight: 100;
-    max-width: 300px;
-    min-width: 200px;
-    z-index: 1;
-}
 
-    .jHelp:after {
-        content: "";
-        bottom: -10px;
-        border: 5px solid transparent;
-        border-top-color: #2e6e9e;
-        position: absolute;
-        left: 5px;
-    }
 
-    .jHelp ~ sdIcon:before {
-        content: "i";
-        color: #8f86b3;
-        position: absolute;
-        font-size: 12px;
-        font-family: webdings;
-        font-weight: 100;
-        animation-name: sdIconAnim;
-        animation-duration: 10s;
-        animation-delay: 6s;
-        animation-iteration-count: infinite;
-    }
 
-sdIcon {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    text-align: center;
-}
-
-@keyframes sdIconAnim {
-    0% {
-        color: #8f86b3;
-    }
-
-    25% {
-        color: white;
-    }
-
-    50% {
-        color: blue;
-    }
-
-    100% {
-        color: #8f86b3;
-    }
-}
 
 
 .jList {
@@ -383,45 +438,680 @@ sdIcon {
         }
 
 
+.jFormMenuDetail {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
+    .jFormMenuDetail > li > ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
 
-div#jHelp {
-    background: #dfeffc;
-    padding: 2em;
+.jForm .jButton > span {
+    display: none;
+}
+
+ul.jFormMenuMaster {
+    list-style: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+}
+
+    ul.jFormMenuMaster > li {
+        width: 32px;
+        height: 32px;
+        margin: .3em;
+        display: inline-block;
+    }
+
+.jFormMenuDetail > li > ul {
+    display: none;
+    position: absolute
+}
+
+.jFormMenuDetail > li:hover > ul {
+    display: block;
+}
+
+/* styles SD.Theme.Delux */
+
+.sdTable {
+    width: 100%;
+}
+
+    .sdTable td, .sdTable th {
+        padding: 3px 10px;
+        font-size: 8pt;
+    }
+
+    .sdTable > thead > tr > th, .sdTable > tbody > tr > th, .sdTable > tfoot > tr > th {
+        border: 1px solid #c5dbec !important;
+        background: linear-gradient(#dfeffc,#bde0fb,#d6ecf1,#f6f7f9);
+        font-weight: bold;
+        color: #2e6e9e;
+    }
+
+    .sdTable > tbody > tr:nth-child(odd) > td {
+        /*Blue
+        background: linear-gradient(#dfeffc,#bde0fb,#d6ecf1,#f6f7f9);*/
+        /*White*/
+        background: linear-gradient(#eff2f5,#f0feff,#ffffff,#ebf8ff)
+    }
+
+    .sdTable > tbody > tr > td {
+        border: 1px solid #a6c9e2;
+        /*Blue
+        background: linear-gradient(#dfeffc,#bde0fb,#d6ecf1,#f6f7f9);*/
+        /*White*/
+        background: linear-gradient(#eff2f5,#f0feff,#ffffff,#ebf8ff);
+        color: #2e6e9e;
+    }
+
+    .sdTable > tbody > tr:hover > td, .sdTable > tbody > tr:nth-child(odd):hover > td {
+        border: 1px solid #79b7e7;
+        background: linear-gradient(#dfeffc,#95dbf3,#60d1ea,#dfe5f3);
+    }
+
+    .sdTable > tbody > tr > td::before {
+        display: none;
+    }
+
+    .sdTable > tbody > tr.selected > td {
+        border: 1px solid #fad42e;
+        background: #fbec88 url(ui-bg_flat_55_fbec88_40x100.png) 50% 50% repeat-x;
+        color: #363636;
+    }
+
+    .sdTable .Added > td {
+        background: #bdf9bd !important;
+        color: green;
+    }
+
+    .sdTable .Modified > td {
+        background: #f6f1a8 !important;
+        color: #946000;
+    }
+
+    .sdTable .Deleted > td {
+        background: #f6dfe3 !important;
+        color: red;
+        text-decoration: line-through;
+    }
+
+#jSearch {
+    width: 100%;
+    height: 200px;
     position: fixed;
-    top: 5%;
-    left: 5%;
-    width: 90%;
-    height: 90%;
-    box-shadow: 5px 5px 20px #9595a2;
-    font-size: 1.3em;
-    font-family: courier new;
     overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid #438eb9;
+    padding: 10px;
+    bottom: 0;
+    left: 0;
+    background: white;
+    box-shadow: -2px -2px 17px #62a8d1;
 }
 
-    div#jHelp > div {
-        overflow-y: scroll;
-        height: 88%;
+    #jSearch > input {
+        width: 100%;
     }
 
-    div#jHelp > span {
-        position: absolute;
-        top: .5em;
-        right: 1em;
-        cursor:pointer
+    #jSearch > div {
+        overflow-y: auto;
+        height: 140px;
     }
 
-ul#sdHelp > li b {
-    color: #4080b5;
+
+.sdLabel {
+    color: darkgray;
+    font-size: .9em;
 }
 
-ul#sdHelp > li > h6 {
-    color: #4080b5;
-    font-size: 2em;
+.sdButton {
+    cursor: pointer;
 }
 
-ul#sdHelp > li {
-    margin-bottom: 2em;
-    border-bottom: 1px dotted #0921ae;
-    padding-bottom: 1em;
+    .sdButton:hover {
+    }
+
+
+
+
+.sdControlContainer {
+    margin: 0 0 1.2em;
+    display: inline-block;
+    width: 25%;
+    position: relative
 }
+
+    .sdControlContainer > span {
+        font-size: .8em;
+        color: #62a8d1
+    }
+
+.sdFormContainer {
+    background: linear-gradient(#dfeffc,#bde0fb,#d6ecf1,#f6f7f9);
+    padding: 2em;
+    position: relative;
+}
+
+.sdForm {
+    padding: 1em;
+    background: linear-gradient(#dfeffc,#bde0fb,#d6ecf1,#f6f7f9);
+    position: relative;
+}
+
+    .sdForm .sdLabel {
+        color: #2e6e9e;
+    }
+
+    .sdForm .sdButton {
+    }
+
+
+    .sdForm > .sdButton:nth-child(2) {
+        right: 2.5em !important;
+    }
+
+    .sdForm > .sdButton:nth-child(3) {
+        right: 4.5em !important;
+    }
+
+    .sdForm > .sdButton:nth-child(4) {
+        right: 6.5em !important;
+    }
+
+    .sdForm > .sdButton:nth-child(5) {
+        right: 8.5em !important;
+    }
+
+    .sdForm > .sdButton:nth-child(6) {
+        right: 10.5em !important;
+    }
+
+
+ul.sdFormMenuMaster {
+    list-style: none;
+    display: inline-block;
+    padding: 0;
+    position: absolute;
+    top: -83px;
+    height: 37px;
+    background: linear-gradient(#dfeffc,#bde0fb,#d6ecf1,#f6f7f9);
+    width: 100%;
+    border-top: 2px solid #aedcf2;
+    border-bottom: 2px solid #aedcf2;
+    text-align: right;
+}
+
+    ul.sdFormMenuMaster > li {
+        display: inline-block;
+        width: 32px;
+        height: 35px;
+        border-top: 1px solid #aedcf2;
+        border-bottom: 1px solid #aedcf2;
+        margin-top: -1px;
+        padding: 0.4em;
+        transition: all .5s
+    }
+
+        ul.sdFormMenuMaster > li:hover {
+            border-top: 1px solid #2e6e9e;
+            background: linear-gradient(#dfeffc,#81c6d8,#1affd06e,#b1ebf9,#f1f5fd);
+            border-bottom: 1px solid #2e6e9e;
+            height: 35px;
+            width: auto
+        }
+
+            ul.sdFormMenuMaster > li:hover > b > span {
+                visibility: visible;
+            }
+
+        ul.sdFormMenuMaster > li > b {
+            color: #2e6e9e
+        }
+
+            ul.sdFormMenuMaster > li > b:hover {
+                border: none;
+                background: none;
+            }
+
+            ul.sdFormMenuMaster > li > b > span {
+                font-size: .7em;
+                font-family: Tahoma;
+                margin-left: .5em;
+                visibility: hidden;
+                vertical-align: top;
+            }
+
+.sdTable .sdButton {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    padding: 0.6em;
+    vertical-align: top;
+    /* background: linear-gradient(#dfeffc,#bde0fb,#d6ecf1,#f6f7f9); */
+    color: #2e6e9e;
+}
+
+.sdButton:hover {
+    background: linear-gradient(#dfeffc,#bde0fb,#d6ecf1,#f6f7f9);
+    border: 1px solid;
+}
+
+ul.sdFormMenuDetail {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+    ul.sdFormMenuDetail > li {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1px solid;
+        padding: .5em 1em;
+        vertical-align: top;
+        background: linear-gradient(#dfeffc,#bde0fb,#d6ecf1,#f6f7f9);
+    }
+
+
+
+        ul.sdFormMenuDetail > li > ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            display: none;
+            margin-left: -11px;
+            margin-top: 11px;
+        }
+
+        ul.sdFormMenuDetail > li:hover {
+            background: linear-gradient(#dfeffc,#81c6d8,#1affd06e,#b1ebf9,#f1f5fd)
+        }
+
+            ul.sdFormMenuDetail > li:hover > ul {
+                display: block;
+            }
+
+        ul.sdFormMenuDetail > li > ul > li {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid;
+            padding: .5em 1em;
+            vertical-align: top;
+            cursor: pointer;
+            background: linear-gradient(#dfeffc,#bde0fb,#d6ecf1,#f6f7f9)
+        }
+
+            ul.sdFormMenuDetail > li > ul > li:hover {
+                background: linear-gradient(#dfeffc,#81c6d8,#67b6d8,#88d4e6,#f1f5fd);
+                color: white;
+                border: 1px solid #2e6e9e;
+            }
+
+        ul.sdFormMenuDetail > li > b {
+            width: 0 !important;
+            height: 0 !important;
+            border: 0 !important;
+            padding: 5px 0 !important;
+        }
+
+        ul.sdFormMenuDetail > li:hover > ul > li > b {
+            width: 0 !important;
+            height: 0 !important;
+            border: 0 !important;
+            padding: 5px 0 !important;
+        }
+
+.sdList {
+    display: table;
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+    .sdList > li {
+        font-family: Tahoma;
+        font-size: .7em !important;
+        width: 46%;
+        font-size: 1.1em;
+        color: #2e6e9e;
+        border: 1px solid;
+        padding: 1em;
+        background: linear-gradient(#dfeffc,#bde0fb,#d6ecf1,#f6f7f9);
+        overflow: hidden;
+        float: left;
+        margin: 1em;
+        height: 300px;
+    }
+
+
+/* styles SD.Theme.Silver */
+
+.sdSilverTable {
+    width: 100%;
+}
+
+    .sdSilverTable td, .sdSilverTable th {
+        padding: 3px 10px;
+        font-size: 8pt;
+    }
+
+    .sdSilverTable > thead > tr > th, .sdSilverTable > tbody > tr > th, .sdSilverTable > tfoot > tr > th {
+        border: 1px solid #c5dbec !important;
+        background: linear-gradient(#e0e0e0, #fbfbfb,#e1e1ea);
+        font-weight: bold;
+        color: #2e6e9e;
+    }
+
+    .sdSilverTable > tbody > tr:nth-child(odd) > td {
+        /*Blue
+        background: linear-gradient(#dfeffc,#bde0fb,#d6ecf1,#f6f7f9);*/
+        /*White
+        background: linear-gradient(#eff2f5,#f0feff,#ffffff,#ebf8ff)*/
+    }
+
+    .sdSilverTable > tbody > tr > td {
+        border: 1px solid #a6c9e2;
+        /* background: linear-gradient(#eff2f5,#f0feff,#ffffff,#ebf8ff); */
+        color: #2e6e9e;
+    }
+
+    .sdSilverTable > tbody > tr:hover > td, .sdSilverTable > tbody > tr:nth-child(odd):hover > td {
+        border: 1px solid #79b7e7;
+        background: linear-gradient(#e0e0e0, #fbfbfb,#e1e1ea);
+    }
+
+    .sdSilverTable > tbody > tr > td::before {
+        display: none;
+    }
+
+    .sdSilverTable > tbody > tr.selected > td {
+        border: 1px solid #fad42e;
+        background: #fbec88 url(ui-bg_flat_55_fbec88_40x100.png) 50% 50% repeat-x;
+        color: #363636;
+    }
+
+    .sdSilverTable .Added > td {
+        background: #bdf9bd !important;
+        color: green;
+    }
+
+    .sdSilverTable .Modified > td {
+        background: #f6f1a8 !important;
+        color: #946000;
+    }
+
+    .sdSilverTable .Deleted > td {
+        background: #f6dfe3 !important;
+        color: red;
+        text-decoration: line-through;
+    }
+
+#jSearch {
+    width: 100%;
+    height: 200px;
+    position: fixed;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid #438eb9;
+    padding: 10px;
+    bottom: 0;
+    left: 0;
+    background: white;
+    box-shadow: -2px -2px 17px #62a8d1;
+}
+
+    #jSearch > input {
+        width: 100%;
+    }
+
+    #jSearch > div {
+        overflow-y: auto;
+        height: 140px;
+    }
+
+
+.sdSilverLabel {
+    color: darkgray;
+    font-size: .9em;
+}
+
+.sdSilverButton {
+    cursor: pointer;
+}
+
+    .sdSilverButton:hover {
+    }
+
+
+
+
+.sdSilverControlContainer {
+    margin: 0 0 1.2em;
+    display: inline-block;
+    width: 25%;
+    position: relative
+}
+
+    .sdSilverControlContainer > span {
+        font-size: .8em;
+        color: #62a8d1
+    }
+
+.sdSilverFormContainer {
+    background: linear-gradient(#e0e0e0, #fbfbfb,#e1e1ea);
+    padding: 2em;
+    position: relative;
+}
+
+.sdSilverForm {
+    padding: 1em;
+    background: linear-gradient(#e0e0e0, #fbfbfb,#e1e1ea);
+    position: relative;
+}
+
+    .sdSilverForm .sdSilverLabel {
+        color: #2e6e9e;
+    }
+
+    .sdSilverForm .sdSilverButton {
+    }
+
+
+    .sdSilverForm > .sdSilverButton:nth-child(2) {
+        right: 2.5em !important;
+    }
+
+    .sdSilverForm > .sdSilverButton:nth-child(3) {
+        right: 4.5em !important;
+    }
+
+    .sdSilverForm > .sdSilverButton:nth-child(4) {
+        right: 6.5em !important;
+    }
+
+    .sdSilverForm > .sdSilverButton:nth-child(5) {
+        right: 8.5em !important;
+    }
+
+    .sdSilverForm > .sdSilverButton:nth-child(6) {
+        right: 10.5em !important;
+    }
+
+
+ul.sdSilverFormMenuMaster {
+    list-style: none;
+    display: inline-block;
+    padding: 0;
+    position: absolute;
+    top: -83px;
+    height: 37px;
+    width: 100%;
+    border-top: 2px solid #c4c4c4;
+    border-bottom: 2px solid #c4c4c4;
+    text-align: right;
+    background: linear-gradient(#e0e0e0, #fbfbfb,#e1e1ea);
+}
+
+    ul.sdSilverFormMenuMaster > li {
+        display: inline-block;
+        width: 32px;
+        height: 35px;
+        border-top: 1px solid #aedcf2;
+        border-bottom: 1px solid #aedcf2;
+        margin-top: -1px;
+        padding: 0.4em;
+        transition: all .5s
+    }
+
+        ul.sdSilverFormMenuMaster > li:hover {
+            border-top: 1px solid #2e6e9e;
+            background: linear-gradient(#dfeffc,#81c6d8,#1affd06e,#b1ebf9,#f1f5fd);
+            border-bottom: 1px solid #2e6e9e;
+            height: 35px;
+            width: auto
+        }
+
+            ul.sdSilverFormMenuMaster > li:hover > b > span {
+                visibility: visible;
+            }
+
+        ul.sdSilverFormMenuMaster > li > b {
+            color: #2e6e9e
+        }
+
+            ul.sdSilverFormMenuMaster > li > b:hover {
+                border: none;
+                background: none;
+            }
+
+            ul.sdSilverFormMenuMaster > li > b > span {
+                font-size: .7em;
+                font-family: Tahoma;
+                margin-left: .5em;
+                visibility: hidden;
+                vertical-align: top;
+            }
+
+.sdSilverTable .sdSilverButton {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    padding: 0.6em;
+    vertical-align: top;
+    /* background: linear-gradient(#dfeffc,#bde0fb,#d6ecf1,#f6f7f9); */
+    color: #2e6e9e;
+}
+
+.sdSilverButton:hover {
+    background: linear-gradient(#dfeffc,#bde0fb,#d6ecf1,#f6f7f9);
+    border: 1px solid;
+}
+
+ul.sdSilverFormMenuDetail {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+    ul.sdSilverFormMenuDetail > li {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1px solid;
+        padding: .5em 1em;
+        vertical-align: top;
+        background: linear-gradient(#dfeffc,#bde0fb,#d6ecf1,#f6f7f9);
+    }
+
+
+
+        ul.sdSilverFormMenuDetail > li > ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            display: none;
+            margin-left: -11px;
+            margin-top: 11px;
+        }
+
+        ul.sdSilverFormMenuDetail > li:hover {
+            background: linear-gradient(#dfeffc,#81c6d8,#1affd06e,#b1ebf9,#f1f5fd)
+        }
+
+            ul.sdSilverFormMenuDetail > li:hover > ul {
+                display: block;
+            }
+
+        ul.sdSilverFormMenuDetail > li > ul > li {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid;
+            padding: .5em 1em;
+            vertical-align: top;
+            cursor: pointer;
+            background: linear-gradient(#dfeffc,#bde0fb,#d6ecf1,#f6f7f9)
+        }
+
+            ul.sdSilverFormMenuDetail > li > ul > li:hover {
+                background: linear-gradient(#dfeffc,#81c6d8,#67b6d8,#88d4e6,#f1f5fd);
+                color: white;
+                border: 1px solid #2e6e9e;
+            }
+
+        ul.sdSilverFormMenuDetail > li > b {
+            width: 0 !important;
+            height: 0 !important;
+            border: 0 !important;
+            padding: 5px 0 !important;
+        }
+
+        ul.sdSilverFormMenuDetail > li:hover > ul > li > b {
+            width: 0 !important;
+            height: 0 !important;
+            border: 0 !important;
+            padding: 5px 0 !important;
+        }
+
+.sdSilverList {
+    display: table;
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+    .sdSilverList > li {
+        font-family: Tahoma;
+        font-size: .7em !important;
+        width: 46%;
+        font-size: 1.1em;
+        color: black;
+        border: 1px solid;
+        padding: 1em;
+        background: linear-gradient(#e0e0e0, #fbfbfb,#e1e1ea);
+        overflow: hidden;
+        float: left;
+        margin: 1em;
+        height: 300px;
+    }
+
