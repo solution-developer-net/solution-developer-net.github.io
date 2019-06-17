@@ -56,21 +56,11 @@ if (typeof (SD) != "undefined") {
                 var sd = this.parent.SD, utils = sd.Utils, ui = sd.UI, e = sd.Events, project = sd.Project, me = project;
                 var c = utils.LoadControls();
                 var config = {
-                    Title:"Basic config",
-                    Data: {
-                        Detail: [
-                            { Id: "1", Description: "for add" },
-                            { Id: "2", Description: "for modified" },
-                            { Id: "3", Description: "for deleted" },
-                        ]
-                    },
-                    ReadonlyColumns: "Id*",
-                    InputHelpColumns: [{
-                        Id:"txtmDescription",Help:"Help for this field"
-                    }]
+                    Title: "Just Title without Theme",
+                    Theme:sd.Theme.None
                 };
                 utils.HTMLForm(config);
-                //c.txtCode.value = JSON.stringify(config);
+                c.txtCode.value = JSON.stringify(config);
                 var editorConfig = {
                     lineNumbers: true,
                     matchBrackets: true,
