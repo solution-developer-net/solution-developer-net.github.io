@@ -60,7 +60,7 @@
 <h3>Basic</h3>
 <div>
     <textarea id="txtCode2" name="code2">
-{ "Title":"Basic config", 
+{ "Title":"Basic config", "Theme":"Basic",
   "Data": { 
     "Master": {"Id":"","Description":""}, 
     "Detail": [ 
@@ -79,7 +79,7 @@
 <h3>Advanced 1</h3>
 <div>
     <textarea id="txtCode3" name="code2">
-{ "Title":"Registro de comprobante bancario",
+{ "Title":"Registro de comprobante bancario","Theme":"Delux",
   "Data":{
     "Master":{"Id":"","Numero":"CB19154-014","Fecha":"","Descripcion":"","IdBanco":"","CodigoBanco":"","Banco":"","CuentaBancaria":""},
     "Detail":[
@@ -87,16 +87,16 @@
     ]},
   "Buttons":{
     "Master":[
-      {"Id":"Search","Title":"","FA":"fa-search"},
+      {"Id":"Search","Title":"Buscar items","FA":"fa-search"},
       {"Id":"Save","Title":"Click para procesar","FA":"fa-save"}
     ],
     "Detail":[
-      {"Id":"Search","Title":"","FA":"fa-search"}
+      {"Id":"Search","Title":"Buscar items","FA":"fa-search"}
     ]
   },
-  "ForeignKeyColumns":[
-    {"Id":"txtmBanco","ServiceMethod":"bancos"},
-    {"Id":"txtImpuesto","ServiceMethod":"impuestos"}
+  "InputWithDatalistColumns":[
+    {"Id":"txtmBanco","List":["Bank 1","Bank 2","Bank 3","Bank 4"]},
+    {"Id":"txtImpuesto","List":["Impuesto 1","Impuesto 2","Impuesto 3","Impuesto 4"]}
   ],
   "InputWithActionColumns":[
     {"Id":"txtmBanco","Event":"blur"},
@@ -123,11 +123,11 @@
 <h3>Advanced 2</h3>
 <div>
     <textarea id="txtCode4" name="code2">
-{ "Container":"#frm",
+{ "Container":"#frm", "Theme":"Silver",
   "Title":"Noticias encontradas 5...",
   "Data":{
     "Master":
-    	{"Id":"","Title":"","IdCategories":"","Category":"","CategoryOriginal":"","Source":"","Text":"","Link":"","Image":"","Reference":""},
+    	{"Id":"","Title":"Buscar noticias","IdCategories":"","Category":"","CategoryOriginal":"","Source":"","Text":"","Link":"","Image":"","Reference":""},
     "Detail":[
       {"Id":900033,"Source":"Noticias24.com","Title":"Aruba extiende por tres meses el cierre de la frontera con Venezuela","Image":"https://portada.noticias24.com/06062019-aruba02.jpg","Text":"Aruba extiende por tres meses el cierre de la frontera con Venezuela\n\n\n\n(San Juan, 05 junio.EFE).- El Gobierno de Aruba, territorio del Reino de los Países Bajos en el Caribe, anunció este miércoles a través de un comunicado que mantendrá cerrada su frontera con Venezuela durante los próximos tres meses. » ver artículo completo","Link":"http://www.noticias24.com/internacionales/noticia/144916/aruba-extiende-por-tres-meses-el-cierre-de-la-frontera-con-venezuela","Category":"Destacado","Short":"DBBC1","Reference":"http://www.noticias24.com/internacionales/noticia/144916/aruba-extiende-por-tres-meses-el-cierre-de-la-frontera-con-venezuela"},
       {"Id":900012,"Source":"Noticias24.com","Title":"Pompeo aseguró que aproximadamente 40 figuras de la oposición desean la presidencia de Venezuela","Image":"https://portada.noticias24.com/Mike-Pompeo-oposicion.jpg","Text":"Pompeo aseguró que aproximadamente 40 figuras de la oposición desean la presidencia de Venezuela\n\n(Caracas, 05 de junio. Noticias24).- El secretario de Estado de Estados Unidos (EEUU), Mike Pompeo, aseguró que aproximadamente 40 personas cercanas a la derecha se consideran \"los elegidos\" para ocupar el cargo de Presidente de la República Bolivariana de Venezuela, en el caso de que se consolide un golpe de Estado en la nación suramericana. » ver artículo completo","Link":"http://www.noticias24.com/venezuela/noticia/355538/pompeo-aseguro-que-aproximadamente-40-figuras-de-la-oposicion-desean-la-presidencia-de-venezuela","Category":"Destacado","Short":"DBBAC","Reference":"http://www.noticias24.com/venezuela/noticia/355538/pompeo-aseguro-que-aproximadamente-40-figuras-de-la-oposicion-desean-la-presidencia-de-venezuela"},
@@ -147,8 +147,8 @@
     {"Id":"txtmImage","Width":"100%"},
     {"Id":"txtmReference","Width":"100%"}
   ],
-  "ForeignKeyColumns":[
-    {"Id":"txtmCategory","ServiceMethod":"categories.json"}
+  "InputWithDatalistColumns":[
+    {"Id":"txtmCategory","List":["Category 1","Category 2","Category 3","Category 4"]}
   ],
   "ReadonlyColumns":"Id*,CategoryOriginal,Image,Source",
   "HiddenColumns":"Id*",
